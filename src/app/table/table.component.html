@@ -1,0 +1,72 @@
+<div class="form-group">
+  <input type="text" class="form-control"  placeholder="Enter Keyword for filter result" [(ngModel)]="searchedKeyword">
+</div>
+
+<nav aria-label="Page navigation example" id="paginator">
+  <ul class="pagination">
+    <a class="page-link clickable" *ngIf="active>0; else elsePrev" (click)="active = active - 1">
+      <li >prev</li>
+    </a>
+    <ng-template #elsePrev>
+      <a class="page-link clickable">
+        <li >prev</li>
+      </a>
+    </ng-template>
+
+    <a class="page-link clickable" *ngIf="active!=1 && pages.length>1" [ngClass]="{'active' : active == 0}" (click)="active = 0">
+      <li >1</li>
+    </a>
+
+    <a class="page-link clickable" *ngFor="let el of pages | slice: active-1:active+2" [ngClass]="{'active' : active == el}" (click)="active = el">
+      <li >{{el+1}}</li>
+    </a>
+
+    <a class="page-link clickable" *ngIf="active<pages.length-2" [ngClass]="{'active' : active == (pages.length-1)}" (click)="active = (pages.length-1)">
+      <li >{{pages.length}}</li>
+    </a>
+
+    <a class="page-link clickable" *ngIf="active<(pages.length-1); else elseNext" (click)="active = active + 1">
+      <li >next</li>
+    </a>
+    <ng-template #elseNext>
+      <a class="page-link clickable">
+        <li >next</li>
+      </a>
+    </ng-template>
+  </ul>
+</nav>
+
+
+<table class="table table-bordered">
+  <thead class="thead-dark">
+  <tr>
+    <th class="clickable" *ngFor="let key of tableConfig.headers" (click)="orderBy(key.label)">
+      {{key.label}}
+      <ng-container *ngIf="orderType; else elseBlock">
+        <fa-icon [icon]="faSortDown" class="align-items-center"></fa-icon>
+      </ng-container>
+      <ng-template #elseBlock>
+        <fa-icon [icon]="faSortUp" class="align-items-center"></fa-icon>
+      </ng-template>
+    </th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of filteredList | filter:searchedKeyword | pagination:(currentPage)">
+    <td *ngFor="let header of tableConfig.headers">
+      {{item[header.key]}}
+    </td>
+    <td>
+      <button *ngFor="let actions of tableConfig.actions" class="{{actions.customCssClass}} mr-1" (click)="doAction(actions.action, item)">
+        <i class="{{actions.icon}}"></i>
+        {{actions.label}}
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<select class="form-select" [ngModel]="itemPerPage" (ngModelChange)="viewItems($event)">
+  <option *ngFor="let item of tableConfig.pagination.itemPerPageOptions" value="{{item}}">{{item}}</option>
+</select>
