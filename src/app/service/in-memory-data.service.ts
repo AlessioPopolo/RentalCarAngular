@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-export interface Hero {
+export interface Utente {
   id: number;
-  name: string;
+  cognome: string;
+  datadinascita: Date;
+  nome: string;
+  ruolo: number;
+  password: string;
+  sso_id: string;
 }
 
 @Injectable({
@@ -11,27 +16,125 @@ export interface Hero {
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const heroes = [
-      { id: 11, name: 'Dr Nice' },
-      { id: 12, name: 'Narco' },
-      { id: 13, name: 'Bombasto' },
-      { id: 14, name: 'Celeritas' },
-      { id: 15, name: 'Magneta' },
-      { id: 16, name: 'RubberMan' },
-      { id: 17, name: 'Dynama' },
-      { id: 18, name: 'Dr IQ' },
-      { id: 19, name: 'Magma' },
-      { id: 20, name: 'Tornado' }
+    const utenti = [
+        {
+          "id": 51,
+          "cognome": "pirlone",
+          "datadinascita": "1998-08-20 00:00:00.000000",
+          "nome": "pirlone",
+          "ruolo": 2,
+          "password": "$2a$10$iMSFtXvxBflorj.OqBGZIeJ8Z2QCF6lqnxvZ6sIF5N.syUaK9/cTu",
+          "sso_id": "pirlone"
+        },
+        {
+          "id": 52,
+          "cognome": "gianni",
+          "datadinascita": "2010-10-10 00:00:00.000000",
+          "nome": "gianni",
+          "ruolo": 2,
+          "password": "$2a$10$nZaW.LTGF/O.NRZzq7XsmOAe1oipmtdgpYF9pOJ6aDxyw8Ya7KP0u",
+          "sso_id": "gianni"
+        },
+        {
+          "id": 54,
+          "cognome": "pino",
+          "datadinascita": "2020-10-10 00:00:00.000000",
+          "nome": "pino",
+          "ruolo": 2,
+          "password": "$2a$10$UgtdJVQQuPLG9vs6oypIIuND6YhB39/t1hjq24..nYZlc82lZzU2K",
+          "sso_id": "pollo"
+        },
+        {
+          "id": 10,
+          "cognome": "Admin",
+          "datadinascita": "2021-07-19 09:55:34.000000",
+          "nome": "Admin",
+          "ruolo": 1,
+          "password": "$2y$12$nLP400tckucKZ2ZwAtYywenIJ/oHyrXiI9O3LsrUj.hrNdk5i8/VO",
+          "sso_id": "admin"
+        },
+        {
+          "id": 1,
+          "cognome": "Polo",
+          "datadinascita": "2010-10-10 00:00:00.000000",
+          "nome": "Polo",
+          "ruolo": 2,
+          "password": "$2y$12$2PL7p.jNAlDTtqgcR4szEe98HC1wKTKLtiVZde70KLD2PT5w0ysLO",
+          "sso_id": "polo"
+        },
+        {
+          "id": 3,
+          "cognome": "Pini",
+          "datadinascita": "1995-10-10 00:00:00.000000",
+          "nome": "Pino",
+          "ruolo": 1,
+          "password": "$2y$12$nLP400tckucKZ2ZwAtYywenIJ/oHyrXiI9O3LsrUj.hrNdk5i8/VO",
+          "sso_id": "pino"
+        },
+        {
+          "id": 45,
+          "cognome": "Modino",
+          "datadinascita": "2006-06-06 00:00:00.000000",
+          "nome": "Mod",
+          "ruolo": 2,
+          "password": "$2y$12$2PL7p.jNAlDTtqgcR4szEe98HC1wKTKLtiVZde70KLD2PT5w0ysLO",
+          "sso_id": "mod"
+        },
+        {
+          "id": 48,
+          "cognome": "Super",
+          "datadinascita": "1111-11-11 00:00:00.000000",
+          "nome": "User",
+          "ruolo": 1,
+          "password": "$2y$12$nLP400tckucKZ2ZwAtYywenIJ/oHyrXiI9O3LsrUj.hrNdk5i8/VO",
+          "sso_id": "user"
+        },
+        {
+          "id": 2,
+          "cognome": "Palolo",
+          "datadinascita": "2002-10-10 00:00:00.000000",
+          "nome": "Palo",
+          "ruolo": 2,
+          "password": "$2y$12$2PL7p.jNAlDTtqgcR4szEe98HC1wKTKLtiVZde70KLD2PT5w0ysLO",
+          "sso_id": "palo"
+        },
+        {
+          "id": 5,
+          "cognome": "Miolo",
+          "datadinascita": "1910-10-10 00:00:00.000000",
+          "nome": "Mio",
+          "ruolo": 1,
+          "password": "$2y$12$nLP400tckucKZ2ZwAtYywenIJ/oHyrXiI9O3LsrUj.hrNdk5i8/VO",
+          "sso_id": "mio"
+        },
+        {
+          "id": 46,
+          "cognome": "Pinino",
+          "datadinascita": "2014-12-15 00:00:00.000000",
+          "nome": "Pinoni",
+          "ruolo": 2,
+          "password": "$2y$12$2PL7p.jNAlDTtqgcR4szEe98HC1wKTKLtiVZde70KLD2PT5w0ysLO",
+          "sso_id": "pinoni"
+        },
+        {
+          "id": 6,
+          "cognome": "Tup",
+          "datadinascita": "1912-12-10 00:00:00.000000",
+          "nome": "Tuo",
+          "ruolo": 1,
+          "password": "$2y$12$nLP400tckucKZ2ZwAtYywenIJ/oHyrXiI9O3LsrUj.hrNdk5i8/VO",
+          "sso_id": "tuo"
+        }
     ];
-    return {heroes};
+    return {utenti};
   }
 
   // Overrides the genId method to ensure that a hero always has an id.
   // If the heroes array is empty,
-  // the method below returns the initial number (11).
+  // the method below returns the initial number (1).
   // if the heroes array is not empty, the method below returns the highest
   // hero id + 1.
-  genId(heroes: Hero[]): number {
-    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 11;
+  genId(utenti: Utente[]): number {
+    return utenti.length > 0 ? Math.max(...utenti.map(utente => utente.id)) + 1 : 1;
   }
 }

@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import * as _ from "lodash";
 import { faSortAlphaDown, faSortAlphaUp } from '@fortawesome/free-solid-svg-icons';
 import {MyTableConfig, thePagination} from "../model/MyTableConfig";
+import {UtenteService} from "../service/utente.service";
+import {Utente} from "../service/in-memory-data.service";
 
 @Component({
   selector: 'app-table',
@@ -12,6 +14,7 @@ export class TableComponent implements OnInit{
 
   @Input() tableConfig!:MyTableConfig;
   @Input() data:any;
+  inMemoryUtenti: Utente[] = [];
   filteredList!: any[];
   lastSortedColumn!: string;
   orderType!: boolean;
@@ -23,24 +26,28 @@ export class TableComponent implements OnInit{
   faSortUp = faSortAlphaUp;
   faSortDown = faSortAlphaDown;
 
-  constructor() { }
+  constructor( private utenteService: UtenteService) { }
 
   ngOnInit(): void {
-    this.filteredList = _.orderBy(this.data,[this.tableConfig.order.defaultColumn], [this.tableConfig.order.orderType]);
+    this.getUtenti();
+    console.log(this.inMemoryUtenti);
+
+  }
+
+  private orderFilteredList() {
+    this.filteredList = _.orderBy(this.inMemoryUtenti, [this.tableConfig.order.defaultColumn], [this.tableConfig.order.orderType]);
     this.lastSortedColumn = this.tableConfig.order.defaultColumn;
     this.orderType = true;
-    if (this.itemPerPage === undefined){
+    if (this.itemPerPage === undefined) {
       this.itemPerPage = this.tableConfig.pagination.itemPerPage;
     }
-    if (this.filteredList.length<=this.itemPerPage){
+    if (this.filteredList.length <= this.itemPerPage) {
       this.pages = [0]
-    }
-    else {
-      if((this.filteredList.length%this.itemPerPage)>0){
-        this.pages = Array((this.filteredList.length + (this.itemPerPage - (this.filteredList.length%this.itemPerPage))) /this.itemPerPage).fill(0).map((x, i) => i);
-      }
-      else {
-        this.pages = Array(this.filteredList.length/this.itemPerPage).fill(0).map((x, i) => i);
+    } else {
+      if ((this.filteredList.length % this.itemPerPage) > 0) {
+        this.pages = Array((this.filteredList.length + (this.itemPerPage - (this.filteredList.length % this.itemPerPage))) / this.itemPerPage).fill(0).map((x, i) => i);
+      } else {
+        this.pages = Array(this.filteredList.length / this.itemPerPage).fill(0).map((x, i) => i);
       }
     }
   }
@@ -49,15 +56,15 @@ export class TableComponent implements OnInit{
     if (this.lastSortedColumn == label){
       this.orderType = !this.orderType;
       if(this.orderType){
-        this.filteredList = _.orderBy(this.data,[label], ['asc']);
+        this.filteredList = _.orderBy(this.inMemoryUtenti,[label], ['asc']);
       }
       else {
-        this.filteredList = _.orderBy(this.data,[label], ['desc']);
+        this.filteredList = _.orderBy(this.inMemoryUtenti,[label], ['desc']);
       }
     }
     else {
       this.orderType = true;
-      this.filteredList = _.orderBy(this.data,[label], ['asc']);
+      this.filteredList = _.orderBy(this.inMemoryUtenti,[label], ['asc']);
     }
     this.lastSortedColumn = label;
   }
@@ -75,6 +82,14 @@ export class TableComponent implements OnInit{
   doAction(action: string, object: object){
     console.log("Action: " + action);
     console.log("Object: " + object);
+  }
+
+  getUtenti(): void {
+    this.utenteService.getUtenti()
+      .subscribe(utenti => {
+        this.inMemoryUtenti = utenti;
+        this.orderFilteredList();
+      });
   }
 
 }
