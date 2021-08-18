@@ -26,6 +26,14 @@ export class UtenteService {
       );
   }
 
+  getUtente(id: number): Observable<Utente> {
+    const url = `${this.utenteUrl}/${id}`;
+    return this.http.get<Utente>(url).pipe(
+      tap(_ => this.log(`fetched utente id=${id}`)),
+      catchError(this.handleError<Utente>(`getUtente id=${id}`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

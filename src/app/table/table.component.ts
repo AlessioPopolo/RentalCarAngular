@@ -92,4 +92,11 @@ export class TableComponent implements OnInit{
       });
   }
 
+  getUtente(id: number): void {
+    this.utenteService.getUtente(id)
+      .subscribe(utente => {
+        console.log(utente);
+      });
+  }
+
 }

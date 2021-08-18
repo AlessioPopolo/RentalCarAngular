@@ -45,7 +45,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of filteredList | filter:searchedKeyword | pagination:(currentPage)">
+  <tr *ngFor="let item of filteredList | filter:searchedKeyword | pagination:(currentPage)" (click)="getUtente(item.id)" class="clickable">
     <td *ngFor="let header of tableConfig.headers">
       {{item[header.key]}}
     </td>

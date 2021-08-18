@@ -34,8 +34,11 @@ export interface MyTableActionEnum {
 
 export const theHeaders: MyHeaders[]= [
   {key: "id", label: "id"},
+  {key: "sso_id", label: "sso_id"},
   {key: "nome", label: "nome"},
-  {key: "cognome", label: "cognome"}
+  {key: "cognome", label: "cognome"},
+  {key: "datadinascita", label: "data di nascita"},
+  {key: "ruolo", label: "ruolo"}
 ]
 
 export const theOrder: MyOrder = {
