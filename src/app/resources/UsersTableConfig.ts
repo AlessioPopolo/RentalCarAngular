@@ -1,36 +1,4 @@
-export interface MyTableConfig{
-  headers : MyHeaders[]
-  order: MyOrder
-  search : MySearch
-  pagination : MyPagination
-  actions : MyTableActionEnum[]
-}
-
-export interface MyHeaders{
-  key: string;
-  label: string;
-}
-
-export interface MyOrder{
-  defaultColumn: string;
-  orderType: boolean;
-}
-
-export interface MySearch {
-  columns : string [];
-}
-
-export interface MyPagination {
-  itemPerPage : number ;
-  itemPerPageOptions : number [];
-}
-
-export interface MyTableActionEnum {
-  customCssClass : string ;
-  icon: string;
-  label: string;
-  action: string;
-}
+import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch, MyTableActionEnum} from "./CustomTableConfig";
 
 export const theHeaders: MyHeaders[]= [
   {key: "id", label: "id"},
@@ -61,7 +29,7 @@ export const theActionEnum: MyTableActionEnum[] = [
   {customCssClass: "btn btn-danger", icon: "bi bi-x-lg", label: "DELETE", action: "delete"}
 ]
 
-export const myTableConfig : MyTableConfig={
+export const usersTableConfig : CustomTableConfig={
   headers: theHeaders,
   order: theOrder,
   search: theSearch,
