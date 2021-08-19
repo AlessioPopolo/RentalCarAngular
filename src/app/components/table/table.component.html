@@ -1,35 +1,8 @@
-<div class="form-group">
+<div class="form-group mt-3">
   <input type="text" class="form-control"  placeholder="Enter Keyword for filter result" [(ngModel)]="searchedKeyword">
 </div>
 
-<nav aria-label="Page navigation example" id="paginator">
-  <ul class="pagination">
-    <a class="page-link clickable" *ngIf="active>0; else elsePrev" (click)="active = active - 1">
-      <li ><i class="bi bi-caret-left-fill"></i></li>
-    </a>
-    <ng-template #elsePrev>
-      <a class="page-link clickable">
-        <li ><i class="bi bi-caret-left-fill"></i></li>
-      </a>
-    </ng-template>
-
-    <a class="page-link clickable" *ngFor="let el of pages" [ngClass]="{'active' : active == el}" (click)="active = el">
-      <li >{{el+1}}</li>
-    </a>
-
-    <a class="page-link clickable" *ngIf="active<(pages.length-1); else elseNext" (click)="active = active + 1">
-      <li ><i class="bi bi-caret-right-fill"></i></li>
-    </a>
-    <ng-template #elseNext>
-      <a class="page-link clickable">
-        <li ><i class="bi bi-caret-right-fill"></i></li>
-      </a>
-    </ng-template>
-  </ul>
-</nav>
-
-
-<table class="table table-bordered">
+<table class="table table-bordered mt-3">
   <thead class="thead-dark">
   <tr>
     <th class="clickable" *ngFor="let key of tableConfig.headers" (click)="orderBy(key.label)">
@@ -59,6 +32,32 @@
   </tbody>
 </table>
 
-<select class="form-select" [ngModel]="itemPerPage" (ngModelChange)="viewItems($event)">
+<nav aria-label="Page navigation example" id="paginator" class="mt-3">
+  <ul class="pagination justify-content-center">
+    <a class="page-link clickable" *ngIf="active>0; else elsePrev" (click)="active = active - 1">
+      <li ><i class="bi bi-caret-left-fill"></i></li>
+    </a>
+    <ng-template #elsePrev>
+      <a class="page-link clickable">
+        <li ><i class="bi bi-caret-left-fill"></i></li>
+      </a>
+    </ng-template>
+
+    <a class="page-link clickable" *ngFor="let el of pages" [ngClass]="{'active' : active == el}" (click)="active = el">
+      <li >{{el+1}}</li>
+    </a>
+
+    <a class="page-link clickable" *ngIf="active<(pages.length-1); else elseNext" (click)="active = active + 1">
+      <li ><i class="bi bi-caret-right-fill"></i></li>
+    </a>
+    <ng-template #elseNext>
+      <a class="page-link clickable">
+        <li ><i class="bi bi-caret-right-fill"></i></li>
+      </a>
+    </ng-template>
+  </ul>
+</nav>
+
+<select class="form-select mt-3" [ngModel]="itemPerPage" (ngModelChange)="viewItems($event)">
   <option *ngFor="let item of tableConfig.pagination.itemPerPageOptions" value="{{item}}">{{item}}</option>
 </select>

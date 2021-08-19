@@ -24,7 +24,6 @@ export const autoPagination: MyPagination = {
 }
 
 export const theActionEnum: MyTableActionEnum[] = [
-  {customCssClass: "btn btn-success", icon: "bi bi-plus-square", label: "ADD", action: "add"},
   {customCssClass: "btn btn-primary", icon: "bi bi-pencil-square", label: "EDIT", action: "edit"},
   {customCssClass: "btn btn-danger", icon: "bi bi-x-lg", label: "DELETE", action: "delete"}
 ]

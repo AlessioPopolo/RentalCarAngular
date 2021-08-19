@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {usersTableConfig} from "../../resources/UsersTableConfig";
+import {addButton} from "../../resources/AddButtonConfig";
 
 @Component({
   selector: 'app-admin-homepage',
@@ -10,6 +11,7 @@ export class AdminHomepageComponent implements OnInit {
 
   title = 'Rentalcar';
   tableConfig = usersTableConfig
+  addButtonConfig = addButton
   utenti: string = "Utenti";
 
   constructor() { }

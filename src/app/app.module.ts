@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { AdminHomepageComponent } from './pages/admin-homepage/admin-homepage.component';
 import { AutoComponent } from './pages/auto/auto.component';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AutoComponent } from './pages/auto/auto.component';
     PaginationPipe,
     NavBarComponent,
     AdminHomepageComponent,
-    AutoComponent
+    AutoComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,
