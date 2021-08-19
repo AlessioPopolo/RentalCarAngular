@@ -9,6 +9,7 @@ export class CustomTableConfig {
 export interface MyHeaders{
   key: string;
   label: string;
+  type: string;
 }
 
 export interface MyOrder{

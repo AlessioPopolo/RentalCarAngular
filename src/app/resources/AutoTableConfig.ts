@@ -1,12 +1,12 @@
 import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch, MyTableActionEnum} from "./CustomTableConfig";
 
 export const theHeaders: MyHeaders[]= [
-  {key: "id", label: "id"},
-  {key: "casacostruttrice", label: "casa costruttrice"},
-  {key: "modello", label: "modello"},
-  {key: "targa", label: "targa"},
-  {key: "immatricolazione", label: "immatricolazione"},
-  {key: "categoria", label: "categoria"}
+  {key: "id", label: "id", type: "text"},
+  {key: "casacostruttrice", label: "casa costruttrice", type: "text"},
+  {key: "modello", label: "modello", type: "text"},
+  {key: "targa", label: "targa", type: "text"},
+  {key: "immatricolazione", label: "immatricolazione", type: "date"},
+  {key: "categoria", label: "categoria", type: "text"}
 ]
 
 export const theOrder: MyOrder = {
