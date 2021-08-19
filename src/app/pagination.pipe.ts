@@ -1,9 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {thePagination} from "./model/MyTableConfig";
 
-@Pipe({name: 'pagination'})
+@Pipe({
+  name: 'pagination',
+  pure: false
+})
 export class PaginationPipe implements PipeTransform {
-  transform(value: any[], page: number): any {
-    return [ ...value.slice( thePagination.itemPerPage*(page) , thePagination.itemPerPage*(page+1)  )]
+  transform(value: any[], currentPage: number, currentItems: number): any {
+    return [ ...value.slice( currentItems*(currentPage) , currentItems*(currentPage+1)  )]
   }
 }

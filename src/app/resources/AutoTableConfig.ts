@@ -19,8 +19,8 @@ export const theSearch: MySearch = {
 }
 
 export const autoPagination: MyPagination = {
-  itemPerPage: 5,
-  itemPerPageOptions: [2, 5, 10, 20]
+  itemPerPage: 3,
+  itemPerPageOptions: [2, 3, 4, 10]
 }
 
 export const theActionEnum: MyTableActionEnum[] = [
