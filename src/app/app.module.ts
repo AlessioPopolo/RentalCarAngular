@@ -6,18 +6,24 @@ import { InMemoryDataService } from './service/in-memory-data.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TableComponent } from './table/table.component';
+import { TableComponent } from './components/table/table.component';
 import { FormsModule } from "@angular/forms";
 import { FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { Ng2SearchPipeModule} from "ng2-search-filter";
 import { PaginationPipe} from "./pagination.pipe";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { AdminHomepageComponent } from './pages/admin-homepage/admin-homepage.component';
+import { AutoComponent } from './pages/auto/auto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
-    PaginationPipe
+    PaginationPipe,
+    NavBarComponent,
+    AdminHomepageComponent,
+    AutoComponent
   ],
   imports: [
     BrowserModule,
