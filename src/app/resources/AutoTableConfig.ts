@@ -18,7 +18,7 @@ export const theSearch: MySearch = {
   columns: []
 }
 
-export const thePagination: MyPagination = {
+export const autoPagination: MyPagination = {
   itemPerPage: 5,
   itemPerPageOptions: [2, 5, 10, 20]
 }
@@ -33,6 +33,6 @@ export const autoTableConfig : CustomTableConfig={
   headers: theHeaders,
   order: theOrder,
   search: theSearch,
-  pagination: thePagination,
+  pagination: autoPagination,
   actions: theActionEnum
 }

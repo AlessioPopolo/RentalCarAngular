@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as _ from "lodash";
 import { faSortAlphaDown, faSortAlphaUp } from '@fortawesome/free-solid-svg-icons';
-import {MyTableConfig, thePagination} from "../model/MyTableConfig";
-import {UtenteService} from "../service/utente.service";
-import {Utente} from "../service/in-memory-data.service";
+import {UtenteService} from "../../service/utente.service";
+import {CustomTableConfig} from "../../resources/CustomTableConfig";
+import {AutoService} from "../../service/auto.service";
 
 @Component({
   selector: 'app-table',
@@ -12,9 +12,9 @@ import {Utente} from "../service/in-memory-data.service";
 })
 export class TableComponent implements OnInit{
 
-  @Input() tableConfig!:MyTableConfig;
-  @Input() data:any;
-  inMemoryUtenti: Utente[] = [];
+  @Input() tableConfig!:CustomTableConfig;
+  @Input() data!:string;
+  inMemoryItems!: any[];
   filteredList!: any[];
   lastSortedColumn!: string;
   orderType!: boolean;
@@ -26,16 +26,28 @@ export class TableComponent implements OnInit{
   faSortUp = faSortAlphaUp;
   faSortDown = faSortAlphaDown;
 
-  constructor( private utenteService: UtenteService) { }
+  constructor(private utenteService: UtenteService, private autoService: AutoService) { }
 
   ngOnInit(): void {
-    this.getUtenti();
-    console.log(this.inMemoryUtenti);
+    switch (this.data){
+      case "Utenti":
+        console.log("Matched Utenti");
+        this.getUtenti();
+        break;
+
+      case "Auto":
+        console.log("Matched Auto");
+        this.getAuto();
+        break;
+
+      default:
+        console.log("No one is matched");
+    }
 
   }
 
-  private orderFilteredList() {
-    this.filteredList = _.orderBy(this.inMemoryUtenti, [this.tableConfig.order.defaultColumn], [this.tableConfig.order.orderType]);
+  orderFilteredList() {
+    this.filteredList = _.orderBy(this.inMemoryItems, [this.tableConfig.order.defaultColumn], [this.tableConfig.order.orderType]);
     this.lastSortedColumn = this.tableConfig.order.defaultColumn;
     this.orderType = true;
     if (this.itemPerPage === undefined) {
@@ -56,15 +68,15 @@ export class TableComponent implements OnInit{
     if (this.lastSortedColumn == label){
       this.orderType = !this.orderType;
       if(this.orderType){
-        this.filteredList = _.orderBy(this.inMemoryUtenti,[label], ['asc']);
+        this.filteredList = _.orderBy(this.inMemoryItems,[label], ['asc']);
       }
       else {
-        this.filteredList = _.orderBy(this.inMemoryUtenti,[label], ['desc']);
+        this.filteredList = _.orderBy(this.inMemoryItems,[label], ['desc']);
       }
     }
     else {
       this.orderType = true;
-      this.filteredList = _.orderBy(this.inMemoryUtenti,[label], ['asc']);
+      this.filteredList = _.orderBy(this.inMemoryItems,[label], ['asc']);
     }
     this.lastSortedColumn = label;
   }
@@ -75,7 +87,7 @@ export class TableComponent implements OnInit{
 
   viewItems(itemPerPage: number) {
     this.itemPerPage = itemPerPage;
-    thePagination.itemPerPage = itemPerPage;
+    this.tableConfig.pagination.itemPerPage = itemPerPage;
     this.ngOnInit();
   }
 
@@ -87,15 +99,16 @@ export class TableComponent implements OnInit{
   getUtenti(): void {
     this.utenteService.getUtenti()
       .subscribe(utenti => {
-        this.inMemoryUtenti = utenti;
+        this.inMemoryItems = utenti;
         this.orderFilteredList();
       });
   }
 
-  getUtente(id: number): void {
-    this.utenteService.getUtente(id)
-      .subscribe(utente => {
-        console.log(utente);
+  getAuto(): void {
+    this.autoService.getAuto()
+      .subscribe(auto => {
+        this.inMemoryItems = auto;
+        this.orderFilteredList();
       });
   }
 
