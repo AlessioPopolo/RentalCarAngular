@@ -16,6 +16,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { AdminHomepageComponent } from './pages/admin-homepage/admin-homepage.component';
 import { AutoComponent } from './pages/auto/auto.component';
 import { ButtonComponent } from './components/button/button.component';
+import { FormComponent } from './components/form/form.component';
+import { FormPageComponent } from './pages/form-page/form-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ButtonComponent } from './components/button/button.component';
     NavBarComponent,
     AdminHomepageComponent,
     AutoComponent,
-    ButtonComponent
+    ButtonComponent,
+    FormComponent,
+    FormPageComponent
   ],
   imports: [
     BrowserModule,

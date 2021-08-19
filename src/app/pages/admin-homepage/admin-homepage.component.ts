@@ -13,6 +13,7 @@ export class AdminHomepageComponent implements OnInit {
   tableConfig = usersTableConfig
   addButtonConfig = addButton
   utenti: string = "Utenti";
+  destination: string = "add/utente";
 
   constructor() { }
 

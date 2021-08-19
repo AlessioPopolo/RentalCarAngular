@@ -9,6 +9,7 @@ import {CustomButtonConfig} from "../../resources/CustomButtonConfig";
 export class ButtonComponent implements OnInit {
 
   @Input() buttonConfig!:CustomButtonConfig;
+  @Input() destination!: string;
 
   constructor() { }
 

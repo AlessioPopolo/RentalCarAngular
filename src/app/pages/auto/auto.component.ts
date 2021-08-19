@@ -14,6 +14,7 @@ export class AutoComponent implements OnInit {
   tableConfig = autoTableConfig
   addButtonConfig = addButton
   auto: string = "Auto";
+  destination: string = "add/auto";
 
   constructor() { }
 
