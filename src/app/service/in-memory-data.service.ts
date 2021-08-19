@@ -11,6 +11,15 @@ export interface Utente {
   sso_id: string;
 }
 
+export interface Auto {
+  id: number;
+  casacostruttrice: string;
+  modello: string;
+  targa: string;
+  immatricolazione: Date;
+  categoria: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -126,7 +135,17 @@ export class InMemoryDataService implements InMemoryDbService {
           "sso_id": "tuo"
         }
     ];
-    return {utenti};
+    const auto = [
+      {
+        "id": 51,
+        "casacostruttrice": "pirlone",
+        "modello": "pirlone",
+        "targa": "123465",
+        "immatricolazione": "1998-08-20",
+        "ruolo": 2
+      }
+    ];
+    return {utenti, auto};
   }
 
   // Overrides the genId method to ensure that a hero always has an id.
