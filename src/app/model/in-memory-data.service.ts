@@ -24,6 +24,10 @@ export interface TipologiaUtente{
   id: number;
   ruolo: string;
 }
+export interface TipologiaAutomezzo{
+  id: number;
+  categoria: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -256,7 +260,49 @@ export class InMemoryDataService implements InMemoryDbService {
         "ruolo": "customer"
       }
     ];
-    return {utenti, automezzi, tipologia_utente};
+    const tipologia_automezzo = [
+      {
+        "id": 1,
+        "categoria": "berlina"
+      },
+      {
+        "id": 2,
+        "categoria": "cabriolet"
+      },
+      {
+        "id": 3,
+        "categoria": "roadster"
+      },
+      {
+        "id": 4,
+        "categoria": "city car"
+      },
+      {
+        "id": 5,
+        "categoria": "monovolume"
+      },
+      {
+        "id": 6,
+        "categoria": "coupè"
+      },
+      {
+        "id": 7,
+        "categoria": "station wagon"
+      },
+      {
+        "id": 8,
+        "categoria": "SUV"
+      },
+      {
+        "id": 9,
+        "categoria": "fuoristrada"
+      },
+      {
+        "id": 10,
+        "categoria": "pickup"
+      }
+    ];
+    return {utenti, automezzi, tipologia_utente, tipologia_automezzo};
   }
 
   // Overrides the genId method to ensure that a hero always has an id.

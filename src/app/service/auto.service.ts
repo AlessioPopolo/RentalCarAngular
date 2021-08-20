@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "./message.service";
 import {Observable, of} from "rxjs";
-import {Auto} from "../model/in-memory-data.service";
+import {Auto, TipologiaAutomezzo} from "../model/in-memory-data.service";
 import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
@@ -10,7 +10,8 @@ import {catchError, tap} from "rxjs/operators";
 })
 export class AutoService {
 
-  private autoUrl = 'api/auto'
+  private autoUrl = 'api/automezzi'
+  private categoriaAutoUrl = 'api/tipologia_automezzo'
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
@@ -23,6 +24,13 @@ export class AutoService {
       .pipe(
         tap(_ => console.log('fetched auto')),
         catchError(this.handleError<Auto[]>('getAuto', []))
+      );
+  }
+
+  getCategorie(): Observable<TipologiaAutomezzo[]> {
+    return this.http.get<TipologiaAutomezzo[]>(this.categoriaAutoUrl)
+      .pipe(
+        catchError(this.handleError<TipologiaAutomezzo[]>('getRuoli', []))
       );
   }
 
@@ -39,5 +47,6 @@ export class AutoService {
       return of(result as T);
     };
   }
+
 
 }

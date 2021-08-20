@@ -4,7 +4,6 @@ import {CustomTableConfig} from "../../resources/CustomTableConfig";
 import {autoTableConfig} from "../../resources/AutoTableConfig";
 import {UtenteService} from "../../service/utente.service";
 import {AutoService} from "../../service/auto.service";
-import {TipologiaUtente} from "../../model/in-memory-data.service";
 
 @Component({
   selector: 'app-form',
@@ -16,7 +15,7 @@ export class FormComponent implements OnInit {
   @Input() action!: string;
   @Input() tipologia!: string;
   tableConfig!: CustomTableConfig;
-  inMemoryItems!: TipologiaUtente[];
+  inMemoryItems!: any;
 
   constructor(private utenteService: UtenteService, private autoService: AutoService) { }
 
@@ -43,6 +42,7 @@ export class FormComponent implements OnInit {
 
   private getFormAuto() {
     this.tableConfig = autoTableConfig;
+    this.getCategorie();
     console.log("form auto")
   }
 
@@ -50,6 +50,12 @@ export class FormComponent implements OnInit {
     this.utenteService.getRuoli()
       .subscribe(ruoli => {
         this.inMemoryItems = ruoli;
+      });
+  }
+  getCategorie(): void {
+    this.autoService.getCategorie()
+      .subscribe(categorie => {
+        this.inMemoryItems = categorie;
       });
   }
 }
