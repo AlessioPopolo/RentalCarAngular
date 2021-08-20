@@ -9,11 +9,13 @@ const routes: Routes = [
   { path: 'admin', children: [
       {path: '', component: AdminHomepageComponent},
       {path: 'add/utente', component: FormPageComponent},
+      {path: 'add/utente/save', redirectTo: '/admin'},
     ]
   },
   { path: 'auto', children: [
       {path: '', component: AutoComponent},
       {path: 'add/auto', component: FormPageComponent},
+      {path: 'add/auto/save', redirectTo: '/auto'},
     ]
   },
 ];

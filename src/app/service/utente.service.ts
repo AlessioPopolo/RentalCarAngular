@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {MessageService} from "./message.service";
 import {Observable, of} from "rxjs";
-import {TipologiaUtente, Utente} from "../model/in-memory-data.service";
 import {catchError, tap} from "rxjs/operators";
+import {TipologiaUtente, Utente} from "../model/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +54,9 @@ export class UtenteService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  addUtente() {
+    console.log("utente add")
   }
 }

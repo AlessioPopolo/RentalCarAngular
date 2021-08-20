@@ -4,6 +4,7 @@ import {CustomTableConfig} from "../../resources/CustomTableConfig";
 import {autoTableConfig} from "../../resources/AutoTableConfig";
 import {UtenteService} from "../../service/utente.service";
 import {AutoService} from "../../service/auto.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-form',
@@ -16,8 +17,10 @@ export class FormComponent implements OnInit {
   @Input() tipologia!: string;
   tableConfig!: CustomTableConfig;
   inMemoryItems!: any;
+  item!: any;
+  addLink: string = "save";
 
-  constructor(private utenteService: UtenteService, private autoService: AutoService) { }
+  constructor(private utenteService: UtenteService, private autoService: AutoService, public router: Router) { }
 
   ngOnInit(): void {
     switch (this.tipologia){
@@ -57,5 +60,22 @@ export class FormComponent implements OnInit {
       .subscribe(categorie => {
         this.inMemoryItems = categorie;
       });
+  }
+
+  add(f: any): void {
+    console.log(f);
+    switch (this.tipologia){
+      case "utente":
+        this.utenteService.addUtente();
+        break;
+
+      case "auto":
+        this.autoService.addAuto();
+        break;
+
+      default:
+        console.log("No one tipologia is matched");
+    }
+    this.router.navigate(["admin"]);
   }
 }

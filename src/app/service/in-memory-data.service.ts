@@ -1,33 +1,6 @@
-import { Injectable } from '@angular/core';
-import { InMemoryDbService } from 'angular-in-memory-web-api';
-
-export interface Utente {
-  id: number;
-  cognome: string;
-  datadinascita: Date;
-  nome: string;
-  ruolo: number;
-  password: string;
-  sso_id: string;
-}
-
-export interface Auto {
-  id: number;
-  casacostruttrice: string;
-  modello: string;
-  targa: string;
-  immatricolazione: Date;
-  categoria: number;
-}
-
-export interface TipologiaUtente{
-  id: number;
-  ruolo: string;
-}
-export interface TipologiaAutomezzo{
-  id: number;
-  categoria: string;
-}
+import {Injectable} from '@angular/core';
+import {InMemoryDbService} from 'angular-in-memory-web-api';
+import {Utente} from "../model/interfaces";
 
 @Injectable({
   providedIn: 'root',

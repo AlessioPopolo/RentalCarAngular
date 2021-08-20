@@ -1,7 +1,7 @@
 import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch, MyTableActionEnum} from "./CustomTableConfig";
 
 export const theHeaders: MyHeaders[]= [
-  {key: "id", label: "id", type: "text"},
+  {key: "id", label: "id", type: "hidden"},
   {key: "sso_id", label: "sso_id", type: "text"},
   {key: "nome", label: "nome", type: "text"},
   {key: "cognome", label: "cognome", type: "text"},

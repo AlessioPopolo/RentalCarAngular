@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "./message.service";
 import {Observable, of} from "rxjs";
-import {Auto, TipologiaAutomezzo} from "../model/in-memory-data.service";
 import {catchError, tap} from "rxjs/operators";
+import {Auto, TipologiaAutomezzo} from "../model/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +48,7 @@ export class AutoService {
     };
   }
 
-
+    addAuto() {
+      console.log("autoadd")
+    }
 }
