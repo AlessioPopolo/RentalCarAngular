@@ -18,7 +18,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of filteredList | filter:searchedKeyword | pagination:currentPage:itemPerPage" class="clickable">
+  <tr *ngFor="let item of filteredList | myFilter:searchedKeyword: tableConfig.search.columns | pagination:currentPage:itemPerPage" class="clickable">
     <td *ngFor="let header of tableConfig.headers">
       {{item[header.key]}}
     </td>

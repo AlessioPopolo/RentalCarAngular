@@ -15,7 +15,9 @@ export const theOrder: MyOrder = {
 };
 
 export const theSearch: MySearch = {
-  columns: []
+  columns: [
+    "casacostruttrice", "modello", "targa", "immatricolazione"
+  ]
 }
 
 export const autoPagination: MyPagination = {

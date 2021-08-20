@@ -15,7 +15,9 @@ export const theOrder: MyOrder = {
 };
 
 export const theSearch: MySearch = {
-  columns: []
+  columns: [
+    "sso_id", "nome", "cognome", "datadinascita"
+  ]
 }
 
 export const userPagination: MyPagination = {
