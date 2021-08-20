@@ -2,6 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {usersTableConfig} from "../../resources/UsersTableConfig";
 import {CustomTableConfig} from "../../resources/CustomTableConfig";
 import {autoTableConfig} from "../../resources/AutoTableConfig";
+import {UtenteService} from "../../service/utente.service";
+import {AutoService} from "../../service/auto.service";
+import {TipologiaUtente} from "../../model/in-memory-data.service";
 
 @Component({
   selector: 'app-form',
@@ -13,8 +16,9 @@ export class FormComponent implements OnInit {
   @Input() action!: string;
   @Input() tipologia!: string;
   tableConfig!: CustomTableConfig;
+  inMemoryItems!: TipologiaUtente[];
 
-  constructor() { }
+  constructor(private utenteService: UtenteService, private autoService: AutoService) { }
 
   ngOnInit(): void {
     switch (this.tipologia){
@@ -33,11 +37,19 @@ export class FormComponent implements OnInit {
 
   private getFormUtente() {
     this.tableConfig = usersTableConfig;
+    this.getRuoli();
     console.log("form utente")
   }
 
   private getFormAuto() {
     this.tableConfig = autoTableConfig;
     console.log("form auto")
+  }
+
+  getRuoli(): void {
+    this.utenteService.getRuoli()
+      .subscribe(ruoli => {
+        this.inMemoryItems = ruoli;
+      });
   }
 }

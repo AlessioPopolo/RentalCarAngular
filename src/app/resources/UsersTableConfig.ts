@@ -6,7 +6,7 @@ export const theHeaders: MyHeaders[]= [
   {key: "nome", label: "nome", type: "text"},
   {key: "cognome", label: "cognome", type: "text"},
   {key: "datadinascita", label: "data di nascita", type: "date"},
-  {key: "ruolo", label: "ruolo", type: "text"}
+  {key: "ruolo", label: "ruolo", type: "select"}
 ]
 
 export const theOrder: MyOrder = {

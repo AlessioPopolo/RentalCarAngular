@@ -4,7 +4,15 @@
       <tbody>
       <tr *ngFor="let key of tableConfig.headers">
         <td><label class="col-form-label">{{key.label}}</label></td>
-        <td><input id="{{key.key}}" type="{{key.type}}" class="form-control"></td>
+        <td>
+          <input *ngIf="key.type != 'select'; else typeSelect" type="{{key.type}}" class="form-control">
+          <ng-template #typeSelect>
+            <select class="form-select">
+              <option *ngFor="let item of inMemoryItems" value="{{item}}">{{item.ruolo}}</option>
+            </select>
+          </ng-template>
+        </td>
+
       </tr>
       <tr>
         <td><label></label></td>

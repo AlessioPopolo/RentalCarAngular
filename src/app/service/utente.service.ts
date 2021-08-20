@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {MessageService} from "./message.service";
 import {Observable, of} from "rxjs";
-import {Utente} from "../model/in-memory-data.service";
+import {TipologiaUtente, Utente} from "../model/in-memory-data.service";
 import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
@@ -11,6 +11,7 @@ import {catchError, tap} from "rxjs/operators";
 export class UtenteService {
 
   private utenteUrl = 'api/utenti';  // URL to web api
+  private ruoloUtenteUrl = 'api/tipologia_utente';
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
@@ -32,6 +33,13 @@ export class UtenteService {
       tap(_ => this.log(`fetched utente id=${id}`)),
       catchError(this.handleError<Utente>(`getUtente id=${id}`))
     );
+  }
+
+  getRuoli(): Observable<TipologiaUtente[]>{
+    return this.http.get<TipologiaUtente[]>(this.ruoloUtenteUrl)
+      .pipe(
+        catchError(this.handleError<TipologiaUtente[]>('getRuoli', []))
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
