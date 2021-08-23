@@ -9,10 +9,10 @@
           <ng-template #typeSelect>
             <select class="form-select" name="{{key.label}}" ngModel="">
               <ng-container *ngIf="tipologia == 'utente'; else autoBlock">
-                <option *ngFor="let item of inMemoryItems" value="{{item}}">{{item.ruolo}}</option>
+                <option *ngFor="let item of inMemoryItems" value="{{item.id}}">{{item.ruolo}}</option>
               </ng-container>
               <ng-template #autoBlock>
-                <option *ngFor="let item of inMemoryItems" value="{{item}}">{{item.categoria}}</option>
+                <option *ngFor="let item of inMemoryItems" value="{{item.id}}">{{item.categoria}}</option>
               </ng-template>
             </select>
           </ng-template>

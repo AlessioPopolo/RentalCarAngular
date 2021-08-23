@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MessageService} from "./message.service";
 import {Observable, of} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
@@ -12,6 +12,18 @@ export class UtenteService {
 
   private utenteUrl = 'api/utenti';  // URL to web api
   private ruoloUtenteUrl = 'api/tipologia_utente';
+  private nuovoUtente: Utente = new class implements Utente {
+    cognome!: string;
+    datadinascita!: Date;
+    id!: number;
+    nome!: string;
+    ruolo: any;
+    sso_id!: string;
+  };
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
@@ -56,7 +68,16 @@ export class UtenteService {
     };
   }
 
-  addUtente() {
-    console.log("utente add")
+  addUtente(addItem: any): Observable<Utente> {
+    this.nuovoUtente.sso_id = addItem.sso_id;
+    this.nuovoUtente.nome = addItem.nome;
+    this.nuovoUtente.cognome = addItem.cognome;
+    this.nuovoUtente.ruolo = addItem.ruolo;
+    this.nuovoUtente.datadinascita = addItem.datadinascita;
+
+    return this.http.post<Utente>(this.utenteUrl, this.nuovoUtente, this.httpOptions).pipe(
+      tap((newUtente: Utente) => this.log(`added utente w/ id=${newUtente.id}`)),
+      catchError(this.handleError<Utente>('addUtente'))
+    );
   }
 }

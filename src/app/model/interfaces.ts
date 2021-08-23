@@ -4,7 +4,7 @@ export interface Utente {
   datadinascita: Date;
   nome: string;
   ruolo: any;
-  password: string;
+  /*password: string;*/
   sso_id: string;
 }
 

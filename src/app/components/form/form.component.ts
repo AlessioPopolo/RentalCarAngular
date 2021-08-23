@@ -5,6 +5,7 @@ import {autoTableConfig} from "../../resources/AutoTableConfig";
 import {UtenteService} from "../../service/utente.service";
 import {AutoService} from "../../service/auto.service";
 import {Router} from "@angular/router";
+import {Auto, Utente} from "../../model/interfaces";
 
 @Component({
   selector: 'app-form',
@@ -16,13 +17,16 @@ export class FormComponent implements OnInit {
   @Input() action!: string;
   @Input() tipologia!: string;
   tableConfig!: CustomTableConfig;
+  utenti: Utente[] = [];
+  auto: Auto[] = [];
   inMemoryItems!: any;
   item!: any;
-  addLink: string = "save";
 
   constructor(private utenteService: UtenteService, private autoService: AutoService, public router: Router) { }
 
   ngOnInit(): void {
+    this.getUtenti();
+    this.getAuto();
     switch (this.tipologia){
       case "utente":
         this.getFormUtente();
@@ -62,20 +66,35 @@ export class FormComponent implements OnInit {
       });
   }
 
-  add(f: any): void {
-    console.log(f);
+  add(addItem: Utente): void {
     switch (this.tipologia){
       case "utente":
-        this.utenteService.addUtente();
+        this.utenteService.addUtente(addItem).subscribe(utente => {
+          this.utenti.push(utente);
+        });
+        this.router.navigate(["admin"]);
         break;
 
       case "auto":
-        this.autoService.addAuto();
+        this.autoService.addAuto(addItem).subscribe(auto => {
+          this.auto.push(auto);
+        });
+        this.router.navigate(["auto"]);
         break;
 
       default:
         console.log("No one tipologia is matched");
+        this.router.navigate(["admin"]);
     }
-    this.router.navigate(["admin"]);
+  }
+
+  private getUtenti() {
+    this.utenteService.getUtenti()
+      .subscribe(utenti => this.utenti = utenti);
+  }
+
+  private getAuto() {
+    this.autoService.getAuto()
+      .subscribe(auto => this.auto = auto);
   }
 }
