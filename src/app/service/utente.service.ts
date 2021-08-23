@@ -34,7 +34,6 @@ export class UtenteService {
   getUtenti(): Observable<Utente[]> {
     return this.http.get<Utente[]>(this.utenteUrl)
       .pipe(
-        tap(_ => console.log('fetched utenti')),
         catchError(this.handleError<Utente[]>('getUtenti', []))
       );
   }

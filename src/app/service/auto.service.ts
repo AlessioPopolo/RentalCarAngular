@@ -34,7 +34,6 @@ export class AutoService {
   getAuto(): Observable<Auto[]> {
     return this.http.get<Auto[]>(this.autoUrl)
       .pipe(
-        tap(_ => console.log('fetched auto')),
         catchError(this.handleError<Auto[]>('getAuto', []))
       );
   }
