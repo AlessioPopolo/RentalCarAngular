@@ -102,4 +102,12 @@ export class AutoService {
       catchError(this.handleError<any>('updateAuto'))
     );
   }
+
+  deleteAuto(id: number): Observable<Auto> {
+    const url = `${this.autoUrl}/${id}`;
+    return this.http.delete<Auto>(url, this.httpOptions).pipe(
+      tap(_ => console.log(`deleted auto id=${id}`)),
+      catchError(this.handleError<Auto>('deleteAuto'))
+    );
+  }
 }

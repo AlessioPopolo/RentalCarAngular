@@ -102,7 +102,7 @@ export class TableComponent implements OnInit{
             break;
 
           case "delete":
-            console.log("todo delete case");
+            this.deleteObj(object, "utente");
             break;
         }
         break;
@@ -114,7 +114,7 @@ export class TableComponent implements OnInit{
             break;
 
           case "delete":
-            console.log("todo delete case");
+            this.deleteObj(object, "auto");
             break;
         }
         break;
@@ -135,6 +135,19 @@ export class TableComponent implements OnInit{
         this.inMemoryItems = auto;
         this.orderFilteredList();
       });
+  }
+
+  deleteObj(object: any, item: string): void {
+    switch (item){
+      case "utente":
+        this.filteredList = this.filteredList.filter(h => h !== object);
+        this.utenteService.deleteUtente(object.id).subscribe();
+        break;
+      case "auto":
+        this.filteredList = this.filteredList.filter(h => h !== object);
+        this.autoService.deleteAuto(object.id).subscribe();
+        break;
+    }
   }
 
 }

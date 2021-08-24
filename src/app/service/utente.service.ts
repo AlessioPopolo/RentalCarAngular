@@ -101,4 +101,12 @@ export class UtenteService {
       catchError(this.handleError<any>('updateUtente'))
     );
   }
+
+  deleteUtente(id: number): Observable<Utente> {
+    const url = `${this.utenteUrl}/${id}`;
+    return this.http.delete<Utente>(url, this.httpOptions).pipe(
+      tap(_ => console.log(`deleted utente id=${id}`)),
+      catchError(this.handleError<Utente>('deleteUtente'))
+    );
+  }
 }
