@@ -42,7 +42,6 @@ export class UtenteService {
     const url = `${this.utenteUrl}/${id}`;
     return this.http.get<Utente>(url)
       .pipe(
-      tap(_ => console.log(`fetched utente id=${id}`)),
       catchError(this.handleError<Utente>(`getUtente id=${id}`))
     );
   }
@@ -58,7 +57,6 @@ export class UtenteService {
     const url = `${this.ruoloUtenteUrl}/${id}`;
     return this.http.get<TipologiaUtente>(url)
       .pipe(
-        tap(_ => console.log(`fetched ruolo utente id=${id}`)),
         catchError(this.handleError<Utente>(`getRuolo id=${id}`))
       );
   }
@@ -82,11 +80,23 @@ export class UtenteService {
     this.nuovoUtente.nome = addItem.nome;
     this.nuovoUtente.cognome = addItem.cognome;
     this.nuovoUtente.ruolo = addItem.ruolo;
-    this.nuovoUtente.datadinascita = addItem.datadinascita;
-
+    this.nuovoUtente.datadinascita = addItem['data di nascita'];
     return this.http.post<Utente>(this.utenteUrl, this.nuovoUtente, this.httpOptions).pipe(
-      tap((newUtente: Utente) => console.log(`added utente w/ id=${newUtente.id}`)),
       catchError(this.handleError<Utente>('addUtente'))
+    );
+  }
+
+  updateUtente(updateItem: any): Observable<any> {
+    this.nuovoUtente.id = updateItem.id;
+    this.nuovoUtente.sso_id = updateItem.sso_id;
+    this.nuovoUtente.nome = updateItem.nome;
+    this.nuovoUtente.cognome = updateItem.cognome;
+    this.nuovoUtente.ruolo = updateItem.ruolo;
+    this.nuovoUtente.datadinascita = updateItem['data di nascita'];
+
+    return this.http.put(this.utenteUrl, this.nuovoUtente, this.httpOptions).pipe(
+      tap(_ => console.log(`updated utente id=${updateItem.id}`)),
+      catchError(this.handleError<any>('updateUtente'))
     );
   }
 }

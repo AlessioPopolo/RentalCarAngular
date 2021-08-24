@@ -100,9 +100,15 @@ export class FormComponent implements OnInit {
   add(addItem: Utente): void {
     switch (this.tipologia){
       case "utente":
-        this.utenteService.addUtente(addItem).subscribe(utente => {
-          this.utenti.push(utente);
-        });
+        if (addItem.id){
+          this.utenteService.updateUtente(addItem).subscribe(utente => {
+          })
+        }
+        else {
+          this.utenteService.addUtente(addItem).subscribe(addItem => {
+            this.utenti.push(addItem);
+          });
+        }
         this.router.navigate(["admin"]);
         break;
 
