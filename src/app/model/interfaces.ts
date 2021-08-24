@@ -1,5 +1,5 @@
 export interface Utente {
-  id: number;
+  id?: number;
   cognome: string;
   datadinascita: Date;
   nome: string;
@@ -9,7 +9,7 @@ export interface Utente {
 }
 
 export interface Auto {
-  id: number;
+  id?: number;
   casacostruttrice: string;
   modello: string;
   targa: string;

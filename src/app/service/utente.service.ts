@@ -57,7 +57,7 @@ export class UtenteService {
     const url = `${this.ruoloUtenteUrl}/${id}`;
     return this.http.get<TipologiaUtente>(url)
       .pipe(
-        catchError(this.handleError<Utente>(`getRuolo id=${id}`))
+        catchError(this.handleError<TipologiaUtente>(`getRuolo id=${id}`))
       );
   }
 
@@ -95,7 +95,9 @@ export class UtenteService {
     this.nuovoUtente.datadinascita = updateItem['data di nascita'];
 
     return this.http.put(this.utenteUrl, this.nuovoUtente, this.httpOptions).pipe(
-      tap(_ => console.log(`updated utente id=${updateItem.id}`)),
+      tap(_ => {
+        delete this.nuovoUtente.id;
+      }),
       catchError(this.handleError<any>('updateUtente'))
     );
   }

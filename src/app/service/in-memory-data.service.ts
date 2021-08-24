@@ -277,13 +277,4 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
     return {utenti, automezzi, tipologia_utente, tipologia_automezzo};
   }
-
-  // Overrides the genId method to ensure that a hero always has an id.
-  // If the heroes array is empty,
-  // the method below returns the initial number (1).
-  // if the heroes array is not empty, the method below returns the highest
-  // hero id + 1.
-  genId(utenti: Utente[]): number {
-    return utenti.length > 0 ? Math.max(...utenti.map(utente => utente.id)) + 1 : 1;
-  }
 }

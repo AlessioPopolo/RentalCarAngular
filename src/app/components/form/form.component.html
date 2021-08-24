@@ -8,14 +8,16 @@
           <ng-container *ngIf="item; else addBlock">
             <input *ngIf="key.type != 'select'; else typeSelect" type="{{key.type}}" class="form-control" name="{{key.label}}" [(ngModel)]="item[key.key]">
             <ng-template #typeSelect>
-              <select class="form-select" name="{{key.label}}" ngModel="{{item.ruolo.id}}">
-                <ng-container *ngIf="tipologia == 'utente'; else autoBlock">
+              <ng-container *ngIf="tipologia == 'utente'; else autoBlock">
+                <select class="form-select" name="{{key.label}}" ngModel="{{item.ruolo.id}}">
                   <option *ngFor="let ruolo of inMemoryItems" [value]="ruolo.id" [selected]="ruolo.ruolo === item[key.key].ruolo">{{ruolo.ruolo}}</option>
-                </ng-container>
-                <ng-template #autoBlock>
+                </select>
+              </ng-container>
+              <ng-template #autoBlock>
+                <select class="form-select" name="{{key.label}}" ngModel="{{item.categoria.id}}">
                   <option *ngFor="let categoria of inMemoryItems" [value]="categoria.id" [selected]="categoria.categoria === item[key.key].categoria">{{categoria.categoria}}</option>
-                </ng-template>
-              </select>
+                </select>
+              </ng-template>
             </ng-template>
           </ng-container>
           <ng-template #addBlock>

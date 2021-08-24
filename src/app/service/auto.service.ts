@@ -42,7 +42,6 @@ export class AutoService {
     const url = `${this.autoUrl}/${id}`;
     return this.http.get<Auto>(url)
       .pipe(
-        tap(_ => console.log(`fetched auto id=${id}`)),
         catchError(this.handleError<Auto>(`getSingleAuto id=${id}`))
       );
   }
@@ -58,7 +57,6 @@ export class AutoService {
     const url = `${this.categoriaAutoUrl}/${id}`;
     return this.http.get<TipologiaAutomezzo>(url)
       .pipe(
-        tap(_ => console.log(`fetched categoria auto id=${id}`)),
         catchError(this.handleError<TipologiaAutomezzo>(`getCategoria id=${id}`))
       );
   }
@@ -78,15 +76,30 @@ export class AutoService {
   }
 
     addAuto(addItem: any) {
-      this.nuovaAuto.casacostruttrice = addItem.casacostruttrice;
+      this.nuovaAuto.casacostruttrice = addItem['casa costruttrice'];
       this.nuovaAuto.modello = addItem.modello;
       this.nuovaAuto.targa = addItem.targa;
       this.nuovaAuto.immatricolazione = addItem.immatricolazione;
       this.nuovaAuto.categoria = addItem.categoria;
 
       return this.http.post<Auto>(this.autoUrl, this.nuovaAuto, this.httpOptions).pipe(
-        tap((newAuto: Auto) => console.log(`added auto w/ id=${newAuto.id}`)),
         catchError(this.handleError<Auto>('addAuto'))
       );
     }
+
+  updateAuto(updateItem: any): Observable<any> {
+    this.nuovaAuto.id = updateItem.id;
+    this.nuovaAuto.casacostruttrice = updateItem['casa costruttrice'];
+    this.nuovaAuto.modello = updateItem.modello;
+    this.nuovaAuto.targa = updateItem.targa;
+    this.nuovaAuto.immatricolazione = updateItem.immatricolazione;
+    this.nuovaAuto.categoria = updateItem['categoria'];
+
+    return this.http.put(this.autoUrl, this.nuovaAuto, this.httpOptions).pipe(
+      tap(_ => {
+        delete this.nuovaAuto.id;
+      }),
+      catchError(this.handleError<any>('updateAuto'))
+    );
+  }
 }

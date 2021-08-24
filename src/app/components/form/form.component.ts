@@ -113,9 +113,15 @@ export class FormComponent implements OnInit {
         break;
 
       case "auto":
-        this.autoService.addAuto(addItem).subscribe(auto => {
-          this.auto.push(auto);
-        });
+        if (addItem.id){
+          this.autoService.updateAuto(addItem).subscribe(auto => {
+          })
+        }
+        else {
+          this.autoService.addAuto(addItem).subscribe(auto => {
+            this.auto.push(auto);
+          });
+        }
         this.router.navigate(["auto"]);
         break;
 
