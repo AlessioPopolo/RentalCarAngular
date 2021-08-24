@@ -121,7 +121,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 4,
         "casacostruttrice": "Fiat",
-        "immatricolazione": "2019-12-01 00:00:00.000000",
+        "immatricolazione": "2019-12-01",
         "modello": "500",
         "targa": "ab126ab",
         "categoria": 1
@@ -129,7 +129,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 44,
         "casacostruttrice": "sta",
-        "immatricolazione": "2222-02-01 00:00:00.000000",
+        "immatricolazione": "2222-02-01",
         "modello": "tion",
         "targa": "1234r5efdsew",
         "categoria": 7
@@ -137,7 +137,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 1,
         "casacostruttrice": "Volvo",
-        "immatricolazione": "2017-06-01 00:00:00.000000",
+        "immatricolazione": "2017-06-01",
         "modello": "V40",
         "targa": "12345678",
         "categoria": 7
@@ -145,7 +145,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 45,
         "casacostruttrice": "berlina",
-        "immatricolazione": "2020-04-01 00:00:00.000000",
+        "immatricolazione": "2020-04-01",
         "modello": "lina",
         "targa": "ghjh",
         "categoria": 1
@@ -153,7 +153,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 46,
         "casacostruttrice": "berlina",
-        "immatricolazione": "2005-02-01 00:00:00.000000",
+        "immatricolazione": "2005-02-01",
         "modello": "lona",
         "targa": "asdf",
         "categoria": 1
@@ -161,7 +161,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 47,
         "casacostruttrice": "bella",
-        "immatricolazione": "1998-06-01 00:00:00.000000",
+        "immatricolazione": "1998-06-01",
         "modello": "bianca",
         "targa": "bella",
         "categoria": 3
@@ -169,7 +169,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 2,
         "casacostruttrice": "BMW",
-        "immatricolazione": "2016-06-01 00:00:00.000000",
+        "immatricolazione": "2016-06-01",
         "modello": "Serie 3",
         "targa": "ab124ab",
         "categoria": 7
@@ -177,7 +177,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 3,
         "casacostruttrice": "Mercedes",
-        "immatricolazione": "2014-02-01 00:00:00.000000",
+        "immatricolazione": "2014-02-01",
         "modello": "AMG",
         "targa": "ab125ab",
         "categoria": 2
@@ -185,7 +185,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 6,
         "casacostruttrice": "Nissan",
-        "immatricolazione": "2017-02-01 00:00:00.000000",
+        "immatricolazione": "2017-02-01",
         "modello": "Qashqai",
         "targa": "ab128ab",
         "categoria": 8
@@ -193,7 +193,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 6,
         "casacostruttrice": "Nissan",
-        "immatricolazione": "2017-02-01 00:00:00.000000",
+        "immatricolazione": "2017-02-01",
         "modello": "Qashqai",
         "targa": "ab128ab",
         "categoria": 8
@@ -201,7 +201,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 6,
         "casacostruttrice": "Nissan",
-        "immatricolazione": "2017-02-01 00:00:00.000000",
+        "immatricolazione": "2017-02-01",
         "modello": "Qashqai",
         "targa": "ab128ab",
         "categoria": 8
@@ -209,7 +209,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 6,
         "casacostruttrice": "Nissan",
-        "immatricolazione": "2017-02-01 00:00:00.000000",
+        "immatricolazione": "2017-02-01",
         "modello": "Qashqai",
         "targa": "ab128ab",
         "categoria": 8
@@ -217,7 +217,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {
         "id": 6,
         "casacostruttrice": "Nissan",
-        "immatricolazione": "2017-02-01 00:00:00.000000",
+        "immatricolazione": "2017-02-01",
         "modello": "Qashqai",
         "targa": "ab128ab",
         "categoria": 8

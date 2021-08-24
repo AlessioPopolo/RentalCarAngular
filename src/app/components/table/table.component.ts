@@ -4,6 +4,7 @@ import { faSortAlphaDown, faSortAlphaUp } from '@fortawesome/free-solid-svg-icon
 import {UtenteService} from "../../service/utente.service";
 import {CustomTableConfig} from "../../resources/CustomTableConfig";
 import {AutoService} from "../../service/auto.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-table',
@@ -14,6 +15,7 @@ export class TableComponent implements OnInit{
 
   @Input() tableConfig!:CustomTableConfig;
   @Input() data!:string;
+  dataRetrieved!: string
   inMemoryItems!: any[];
   filteredList!: any[];
   lastSortedColumn!: string;
@@ -26,17 +28,17 @@ export class TableComponent implements OnInit{
   faSortUp = faSortAlphaUp;
   faSortDown = faSortAlphaDown;
 
-  constructor(private utenteService: UtenteService, private autoService: AutoService) { }
+  constructor(private utenteService: UtenteService, private autoService: AutoService, public router: Router) { }
 
   ngOnInit(): void {
     switch (this.data){
       case "Utenti":
-        console.log("Matched Utenti");
+        this.dataRetrieved = "utenti";
         this.getUtenti();
         break;
 
       case "Auto":
-        console.log("Matched Auto");
+        this.dataRetrieved = "auto";
         this.getAuto();
         break;
 
@@ -91,9 +93,32 @@ export class TableComponent implements OnInit{
     this.ngOnInit();
   }
 
-  doAction(action: string, object: object){
-    console.log("Action: " + action);
-    console.log("Object: " + object);
+  doAction(action: string, object: any){
+    switch (this.dataRetrieved){
+      case "utenti":
+        switch (action){
+          case "edit":
+            this.router.navigate(["admin/edit/" + object.id + "/utente"]);
+            break;
+
+          case "delete":
+            console.log("todo delete case");
+            break;
+        }
+        break;
+
+      case "auto":
+        switch (action){
+          case "edit":
+            this.router.navigate(["auto/edit/" + object.id + "/auto"]);
+            break;
+
+          case "delete":
+            console.log("todo delete case");
+            break;
+        }
+        break;
+    }
   }
 
   getUtenti(): void {

@@ -40,8 +40,9 @@ export class UtenteService {
 
   getUtente(id: number): Observable<Utente> {
     const url = `${this.utenteUrl}/${id}`;
-    return this.http.get<Utente>(url).pipe(
-      tap(_ => this.log(`fetched utente id=${id}`)),
+    return this.http.get<Utente>(url)
+      .pipe(
+      tap(_ => console.log(`fetched utente id=${id}`)),
       catchError(this.handleError<Utente>(`getUtente id=${id}`))
     );
   }
@@ -50,6 +51,15 @@ export class UtenteService {
     return this.http.get<TipologiaUtente[]>(this.ruoloUtenteUrl)
       .pipe(
         catchError(this.handleError<TipologiaUtente[]>('getRuoli', []))
+      );
+  }
+
+  getRuolo(id: number): Observable<TipologiaUtente> {
+    const url = `${this.ruoloUtenteUrl}/${id}`;
+    return this.http.get<TipologiaUtente>(url)
+      .pipe(
+        tap(_ => console.log(`fetched ruolo utente id=${id}`)),
+        catchError(this.handleError<Utente>(`getRuolo id=${id}`))
       );
   }
 
@@ -75,7 +85,7 @@ export class UtenteService {
     this.nuovoUtente.datadinascita = addItem.datadinascita;
 
     return this.http.post<Utente>(this.utenteUrl, this.nuovoUtente, this.httpOptions).pipe(
-      tap((newUtente: Utente) => this.log(`added utente w/ id=${newUtente.id}`)),
+      tap((newUtente: Utente) => console.log(`added utente w/ id=${newUtente.id}`)),
       catchError(this.handleError<Utente>('addUtente'))
     );
   }

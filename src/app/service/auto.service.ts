@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MessageService} from "./message.service";
 import {Observable, of} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
-import {Auto, TipologiaAutomezzo, Utente} from "../model/interfaces";
+import {Auto, TipologiaAutomezzo} from "../model/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -38,10 +38,28 @@ export class AutoService {
       );
   }
 
+  getSingleAuto(id: number): Observable<Auto> {
+    const url = `${this.autoUrl}/${id}`;
+    return this.http.get<Auto>(url)
+      .pipe(
+        tap(_ => console.log(`fetched auto id=${id}`)),
+        catchError(this.handleError<Auto>(`getSingleAuto id=${id}`))
+      );
+  }
+
   getCategorie(): Observable<TipologiaAutomezzo[]> {
     return this.http.get<TipologiaAutomezzo[]>(this.categoriaAutoUrl)
       .pipe(
         catchError(this.handleError<TipologiaAutomezzo[]>('getRuoli', []))
+      );
+  }
+
+  getCategoria(id: number): Observable<TipologiaAutomezzo> {
+    const url = `${this.categoriaAutoUrl}/${id}`;
+    return this.http.get<TipologiaAutomezzo>(url)
+      .pipe(
+        tap(_ => console.log(`fetched categoria auto id=${id}`)),
+        catchError(this.handleError<TipologiaAutomezzo>(`getCategoria id=${id}`))
       );
   }
 
@@ -67,7 +85,7 @@ export class AutoService {
       this.nuovaAuto.categoria = addItem.categoria;
 
       return this.http.post<Auto>(this.autoUrl, this.nuovaAuto, this.httpOptions).pipe(
-        tap((newAuto: Auto) => this.log(`added auto w/ id=${newAuto.id}`)),
+        tap((newAuto: Auto) => console.log(`added auto w/ id=${newAuto.id}`)),
         catchError(this.handleError<Auto>('addAuto'))
       );
     }

@@ -4,7 +4,7 @@ import {CustomTableConfig} from "../../resources/CustomTableConfig";
 import {autoTableConfig} from "../../resources/AutoTableConfig";
 import {UtenteService} from "../../service/utente.service";
 import {AutoService} from "../../service/auto.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Auto, Utente} from "../../model/interfaces";
 
 @Component({
@@ -21,18 +21,51 @@ export class FormComponent implements OnInit {
   auto: Auto[] = [];
   inMemoryItems!: any;
   item!: any;
+  destination!: string;
 
-  constructor(private utenteService: UtenteService, private autoService: AutoService, public router: Router) { }
+  constructor(private utenteService: UtenteService, private autoService: AutoService, public router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getUtenti();
     this.getAuto();
     switch (this.tipologia){
       case "utente":
+        this.route.url.subscribe(paramsId => {
+          // @ts-ignore
+          this.destination = paramsId.pop().toString();
+        });
+        if (!isNaN(+this.destination)){
+          var numberValue = Number(this.destination);
+          this.utenteService.getUtente(numberValue)
+            .subscribe(utente => {
+              this.item = utente;
+              this.utenteService.getRuolo(this.item.ruolo)
+                .subscribe(ruolo => {
+                  this.item.ruolo = ruolo;
+                })
+            });
+        }
+
         this.getFormUtente();
         break;
 
       case "auto":
+        this.route.url.subscribe(paramsId => {
+          // @ts-ignore
+          this.destination = paramsId.pop().toString();
+        });
+        if (!isNaN(+this.destination)){
+          var numberValue = Number(this.destination);
+          this.autoService.getSingleAuto(numberValue)
+            .subscribe(singleAuto => {
+              this.item = singleAuto;
+              this.autoService.getCategoria(this.item.categoria)
+                .subscribe(categoria => {
+                  this.item.categoria = categoria;
+                })
+            });
+        }
+
         this.getFormAuto();
         break;
 
@@ -44,13 +77,11 @@ export class FormComponent implements OnInit {
   private getFormUtente() {
     this.tableConfig = usersTableConfig;
     this.getRuoli();
-    console.log("form utente")
   }
 
   private getFormAuto() {
     this.tableConfig = autoTableConfig;
     this.getCategorie();
-    console.log("form auto")
   }
 
   getRuoli(): void {
