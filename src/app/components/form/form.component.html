@@ -6,30 +6,34 @@
         <td><label class="col-form-label">{{key.label}}</label></td>
         <td>
           <ng-container *ngIf="item; else addBlock">
-            <input *ngIf="key.type != 'select'; else typeSelect" type="{{key.type}}" class="form-control" name="{{key.label}}" [(ngModel)]="item[key.key]">
-            <ng-template #typeSelect>
-              <ng-container *ngIf="tipologia == 'utente'; else autoBlock">
+            <input *ngIf="key.type != 'select' && key.type != 'checkbox';" type="{{key.type}}" class="form-control" name="{{key.label}}" [(ngModel)]="item[key.key]">
+            <ng-container *ngIf="key.type == 'select';">
+              <ng-container *ngIf="tipologia == 'utente';">
                 <select class="form-select" name="{{key.label}}" ngModel="{{item.ruolo.id}}">
                   <option *ngFor="let ruolo of inMemoryItems" [value]="ruolo.id" [selected]="ruolo.ruolo === item[key.key].ruolo">{{ruolo.ruolo}}</option>
                 </select>
               </ng-container>
-              <ng-template #autoBlock>
+              <ng-container *ngIf="tipologia == 'auto';">
                 <select class="form-select" name="{{key.label}}" ngModel="{{item.categoria.id}}">
                   <option *ngFor="let categoria of inMemoryItems" [value]="categoria.id" [selected]="categoria.categoria === item[key.key].categoria">{{categoria.categoria}}</option>
                 </select>
-              </ng-template>
-            </ng-template>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="key.type == 'checkbox';">
+              <label class="col-form-label">Non approvabile</label>
+
+            </ng-container>
           </ng-container>
           <ng-template #addBlock>
             <input *ngIf="key.type != 'select'; else typeSelect" type="{{key.type}}" class="form-control" name="{{key.label}}" ngModel>
             <ng-template #typeSelect>
               <select class="form-select" name="{{key.label}}" ngModel="">
-                <ng-container *ngIf="tipologia == 'utente'; else autoBlock">
+                <ng-container *ngIf="tipologia == 'utente';">
                   <option *ngFor="let item of inMemoryItems" value="{{item.id}}">{{item.ruolo}}</option>
                 </ng-container>
-                <ng-template #autoBlock>
+                <ng-container *ngIf="tipologia == 'auto';">
                   <option *ngFor="let item of inMemoryItems" value="{{item.id}}">{{item.categoria}}</option>
-                </ng-template>
+                </ng-container>
               </select>
             </ng-template>
           </ng-template>

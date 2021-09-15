@@ -85,6 +85,7 @@ export class PrenotazioniService {
     this.nuovaPrenotazione.startdate = updateItem.startdate;
     this.nuovaPrenotazione.enddate = updateItem.enddate;
     this.nuovaPrenotazione.approved = false;
+    console.log(this.nuovaPrenotazione);
     return this.http.put(`${this.prenotazioneUrl}/modifica`, this.nuovaPrenotazione, this.httpOptions).pipe(
       tap(_ => {
         delete this.nuovaPrenotazione.id;
