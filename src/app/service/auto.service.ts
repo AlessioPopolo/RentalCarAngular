@@ -49,7 +49,7 @@ export class AutoService {
   getCategorie(): Observable<TipologiaAutomezzo[]> {
     return this.http.get<TipologiaAutomezzo[]>(this.categoriaAutoUrl)
       .pipe(
-        catchError(this.handleError<TipologiaAutomezzo[]>('getRuoli', []))
+        catchError(this.handleError<TipologiaAutomezzo[]>('getCategorie', []))
       );
   }
 

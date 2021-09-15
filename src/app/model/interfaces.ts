@@ -4,8 +4,8 @@ export interface Utente {
   datadinascita: Date;
   nome: string;
   ruolo: any;
-  /*password: string;*/
-  sso_id: string;
+  password: string;
+  ssoId: string;
 }
 
 export interface Auto {

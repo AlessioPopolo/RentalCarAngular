@@ -2,11 +2,12 @@ import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch, MyTableAc
 
 export const theHeaders: MyHeaders[]= [
   {key: "id", label: "id", type: "hidden"},
-  {key: "sso_id", label: "sso_id", type: "text"},
+  {key: "ssoId", label: "ssoId", type: "text"},
   {key: "nome", label: "nome", type: "text"},
   {key: "cognome", label: "cognome", type: "text"},
   {key: "datadinascita", label: "data di nascita", type: "date"},
-  {key: "ruolo", label: "ruolo", type: "select"}
+  {key: "ruolo", label: "ruolo", type: "select"},
+  {key: "password", label: "password", type: "password"}
 ]
 
 export const theOrder: MyOrder = {
@@ -16,7 +17,7 @@ export const theOrder: MyOrder = {
 
 export const theSearch: MySearch = {
   columns: [
-    "sso_id", "nome", "cognome", "datadinascita"
+    "ssoId", "nome", "cognome", "datadinascita"
   ]
 }
 

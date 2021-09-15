@@ -39,7 +39,7 @@ export class FormComponent implements OnInit {
           this.utenteService.getUtente(numberValue)
             .subscribe(utente => {
               this.item = utente;
-              this.utenteService.getRuolo(this.item.ruolo)
+              this.utenteService.getRuolo(this.item.ruolo.id)
                 .subscribe(ruolo => {
                   this.item.ruolo = ruolo;
                 })

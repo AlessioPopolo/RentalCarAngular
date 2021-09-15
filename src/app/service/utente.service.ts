@@ -18,7 +18,8 @@ export class UtenteService {
     id!: number;
     nome!: string;
     ruolo: any;
-    sso_id!: string;
+    ssoId!: string;
+    password!: string;
   };
 
   httpOptions = {
@@ -32,14 +33,14 @@ export class UtenteService {
   }
 
   getUtenti(): Observable<Utente[]> {
-    return this.http.get<Utente[]>(this.utenteUrl + "/lista-customers")
+    return this.http.get<Utente[]>(`${this.utenteUrl}/lista-customers`)
       .pipe(
         catchError(this.handleError<Utente[]>('getUtenti', []))
       );
   }
 
   getUtente(id: number): Observable<Utente> {
-    const url = `${this.utenteUrl}/${id}`;
+    const url = `${this.utenteUrl}/id=${id}`;
     return this.http.get<Utente>(url)
       .pipe(
       catchError(this.handleError<Utente>(`getUtente id=${id}`))
@@ -47,14 +48,14 @@ export class UtenteService {
   }
 
   getRuoli(): Observable<TipologiaUtente[]>{
-    return this.http.get<TipologiaUtente[]>(this.ruoloUtenteUrl)
+    return this.http.get<TipologiaUtente[]>(`${this.utenteUrl}/lista-ruoli`)
       .pipe(
         catchError(this.handleError<TipologiaUtente[]>('getRuoli', []))
       );
   }
 
   getRuolo(id: number): Observable<TipologiaUtente> {
-    const url = `${this.ruoloUtenteUrl}/${id}`;
+    const url = `${this.utenteUrl}/ruolo=${id}`;
     return this.http.get<TipologiaUtente>(url)
       .pipe(
         catchError(this.handleError<TipologiaUtente>(`getRuolo id=${id}`))
@@ -76,25 +77,37 @@ export class UtenteService {
   }
 
   addUtente(addItem: any): Observable<Utente> {
-    this.nuovoUtente.sso_id = addItem.sso_id;
+    this.nuovoUtente.ssoId = addItem.ssoId;
     this.nuovoUtente.nome = addItem.nome;
     this.nuovoUtente.cognome = addItem.cognome;
     this.nuovoUtente.ruolo = addItem.ruolo;
+    if (addItem.ruolo==="1"){
+      this.nuovoUtente.ruolo = {'ruolo':'customer','id':'1'};
+    }
+    else if (addItem.ruolo==="2"){
+      this.nuovoUtente.ruolo = {'ruolo':'superuser','id':'2'};
+    }
     this.nuovoUtente.datadinascita = addItem['data di nascita'];
-    return this.http.post<Utente>(this.utenteUrl, this.nuovoUtente, this.httpOptions).pipe(
+    this.nuovoUtente.password = addItem.password;
+    return this.http.post<Utente>(`${this.utenteUrl}/inserisci`, this.nuovoUtente, this.httpOptions).pipe(
       catchError(this.handleError<Utente>('addUtente'))
     );
   }
 
   updateUtente(updateItem: any): Observable<any> {
     this.nuovoUtente.id = updateItem.id;
-    this.nuovoUtente.sso_id = updateItem.sso_id;
+    this.nuovoUtente.ssoId = updateItem.ssoId;
     this.nuovoUtente.nome = updateItem.nome;
     this.nuovoUtente.cognome = updateItem.cognome;
-    this.nuovoUtente.ruolo = updateItem.ruolo;
+    if (updateItem.ruolo==="1"){
+      this.nuovoUtente.ruolo = {'ruolo':'customer','id':'1'};
+    }
+    else if (updateItem.ruolo==="2"){
+      this.nuovoUtente.ruolo = {'ruolo':'superuser','id':'2'};
+    }
     this.nuovoUtente.datadinascita = updateItem['data di nascita'];
-
-    return this.http.put(this.utenteUrl, this.nuovoUtente, this.httpOptions).pipe(
+    this.nuovoUtente.password = updateItem.password;
+    return this.http.put(`${this.utenteUrl}/modifica`, this.nuovoUtente, this.httpOptions).pipe(
       tap(_ => {
         delete this.nuovoUtente.id;
       }),
@@ -103,7 +116,7 @@ export class UtenteService {
   }
 
   deleteUtente(id: number): Observable<Utente> {
-    const url = `${this.utenteUrl}/${id}`;
+    const url = `${this.utenteUrl}/elimina/${id}`;
     return this.http.delete<Utente>(url, this.httpOptions).pipe(
       tap(_ => console.log(`deleted utente id=${id}`)),
       catchError(this.handleError<Utente>('deleteUtente'))
