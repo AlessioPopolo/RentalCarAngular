@@ -5,6 +5,7 @@ import {UtenteService} from "../../service/utente.service";
 import {CustomTableConfig} from "../../resources/CustomTableConfig";
 import {AutoService} from "../../service/auto.service";
 import {Router} from "@angular/router";
+import {PrenotazioniService} from "../../service/prenotazioni.service";
 
 @Component({
   selector: 'app-table',
@@ -28,7 +29,7 @@ export class TableComponent implements OnInit{
   faSortUp = faSortAlphaUp;
   faSortDown = faSortAlphaDown;
 
-  constructor(private utenteService: UtenteService, private autoService: AutoService, public router: Router) { }
+  constructor(private utenteService: UtenteService, private autoService: AutoService, private prenotazioniService: PrenotazioniService, public router: Router) { }
 
   ngOnInit(): void {
     switch (this.data){
@@ -40,6 +41,11 @@ export class TableComponent implements OnInit{
       case "Auto":
         this.dataRetrieved = "auto";
         this.getAuto();
+        break;
+
+      case "Prenotazioni":
+        this.dataRetrieved = "prenotazioni";
+        this.getPrenotazioni();
         break;
 
       default:
@@ -118,6 +124,18 @@ export class TableComponent implements OnInit{
             break;
         }
         break;
+
+      case "prenotazioni":
+        switch (action){
+          case "edit":
+            this.router.navigate(["prenotazioni/edit/" + object.id + "/prenotazioni"]);
+            break;
+
+          case "delete":
+            this.deleteObj(object, "prenotazione");
+            break;
+        }
+        break;
     }
   }
 
@@ -137,6 +155,14 @@ export class TableComponent implements OnInit{
       });
   }
 
+  getPrenotazioni(): void {
+    this.prenotazioniService.getPrenotazioni()
+      .subscribe(prenotazioni => {
+        this.inMemoryItems = prenotazioni;
+        this.orderFilteredList();
+      });
+  }
+
   deleteObj(object: any, item: string): void {
     switch (item){
       case "utente":
@@ -146,6 +172,10 @@ export class TableComponent implements OnInit{
       case "auto":
         this.filteredList = this.filteredList.filter(h => h !== object);
         this.autoService.deleteAuto(object.id).subscribe();
+        break;
+      case "prenotazione":
+        this.filteredList = this.filteredList.filter(h => h !== object);
+        this.prenotazioniService.deletePrenotazione(object.id).subscribe();
         break;
     }
   }

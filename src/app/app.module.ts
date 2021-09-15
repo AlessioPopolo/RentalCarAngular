@@ -17,6 +17,7 @@ import { AutoComponent } from './pages/auto/auto.component';
 import { ButtonComponent } from './components/button/button.component';
 import { FormComponent } from './components/form/form.component';
 import { FormPageComponent } from './pages/form-page/form-page.component';
+import { ReservationComponent } from './pages/reservation/reservation.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FormPageComponent } from './pages/form-page/form-page.component';
     ButtonComponent,
     FormComponent,
     FormPageComponent,
-    FilterPipe
+    FilterPipe,
+    ReservationComponent
   ],
   imports: [
     BrowserModule,

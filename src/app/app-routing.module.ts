@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {AdminHomepageComponent} from "./pages/admin-homepage/admin-homepage.component";
 import {AutoComponent} from "./pages/auto/auto.component";
 import {FormPageComponent} from "./pages/form-page/form-page.component";
+import {ReservationComponent} from "./pages/reservation/reservation.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/admin', pathMatch: 'full'},
@@ -18,6 +19,10 @@ const routes: Routes = [
       {path: 'edit/:id/auto', component: FormPageComponent},
     ]
   },
+  { path: 'reservation', children: [
+      {path: 'all', component: ReservationComponent}
+    ]
+  }
 ];
 
 

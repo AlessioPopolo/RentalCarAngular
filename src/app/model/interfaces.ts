@@ -17,6 +17,15 @@ export interface Auto {
   categoria: any;
 }
 
+export interface Prenotazione {
+  id?: number;
+  utente: Utente;
+  automezzo: Auto;
+  startdate: Date;
+  enddate: Date;
+  approved: boolean;
+}
+
 export interface TipologiaUtente {
   id: number;
   ruolo: string;

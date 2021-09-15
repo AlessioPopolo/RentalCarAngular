@@ -80,7 +80,7 @@ export class AutoService {
       this.nuovaAuto.targa = addItem.targa;
       this.nuovaAuto.immatricolazione = addItem.immatricolazione;
       this.nuovaAuto.categoria = addItem.categoria;
-
+      //TODO categoria attualmente restituisce un numero, e non va bene, è necessario l'oggetto
       return this.http.post<Auto>(`${this.autoUrl}/inserisci`, this.nuovaAuto, this.httpOptions).pipe(
         catchError(this.handleError<Auto>('addAuto'))
       );
@@ -93,7 +93,7 @@ export class AutoService {
     this.nuovaAuto.targa = updateItem.targa;
     this.nuovaAuto.immatricolazione = updateItem.immatricolazione;
     this.nuovaAuto.categoria = updateItem['categoria'];
-
+    //TODO categoria attualmente restituisce un numero, e non va bene, è necessario l'oggetto
     return this.http.put(`${this.autoUrl}/modifica`, this.nuovaAuto, this.httpOptions).pipe(
       tap(_ => {
         delete this.nuovaAuto.id;
