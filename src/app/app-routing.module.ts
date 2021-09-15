@@ -19,8 +19,9 @@ const routes: Routes = [
       {path: 'edit/:id/auto', component: FormPageComponent},
     ]
   },
-  { path: 'reservation', children: [
-      {path: 'all', component: ReservationComponent}
+  { path: 'prenotazioni', children: [
+      {path: 'all', component: ReservationComponent},
+      {path: 'edit/:id/prenotazioni', component: FormPageComponent}
     ]
   }
 ];
