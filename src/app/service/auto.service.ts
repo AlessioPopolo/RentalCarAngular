@@ -10,8 +10,7 @@ import {Auto, TipologiaAutomezzo} from "../model/interfaces";
 })
 export class AutoService {
 
-  private autoUrl = 'api/automezzi'
-  private categoriaAutoUrl = 'api/tipologia_automezzo'
+  private autoUrl = 'http://localhost:8080/api/automezzo'
   private nuovaAuto: Auto = new class implements Auto {
     casacostruttrice!: string;
     categoria: any;
@@ -32,14 +31,14 @@ export class AutoService {
   }
 
   getAuto(): Observable<Auto[]> {
-    return this.http.get<Auto[]>(this.autoUrl)
+    return this.http.get<Auto[]>(`${this.autoUrl}/lista-auto`)
       .pipe(
         catchError(this.handleError<Auto[]>('getAuto', []))
       );
   }
 
   getSingleAuto(id: number): Observable<Auto> {
-    const url = `${this.autoUrl}/${id}`;
+    const url = `${this.autoUrl}/id=${id}`;
     return this.http.get<Auto>(url)
       .pipe(
         catchError(this.handleError<Auto>(`getSingleAuto id=${id}`))
@@ -47,14 +46,14 @@ export class AutoService {
   }
 
   getCategorie(): Observable<TipologiaAutomezzo[]> {
-    return this.http.get<TipologiaAutomezzo[]>(this.categoriaAutoUrl)
+    return this.http.get<TipologiaAutomezzo[]>(`${this.autoUrl}/lista-categorie`)
       .pipe(
         catchError(this.handleError<TipologiaAutomezzo[]>('getCategorie', []))
       );
   }
 
   getCategoria(id: number): Observable<TipologiaAutomezzo> {
-    const url = `${this.categoriaAutoUrl}/${id}`;
+    const url = `${this.autoUrl}/categoria=${id}`;
     return this.http.get<TipologiaAutomezzo>(url)
       .pipe(
         catchError(this.handleError<TipologiaAutomezzo>(`getCategoria id=${id}`))
@@ -82,7 +81,7 @@ export class AutoService {
       this.nuovaAuto.immatricolazione = addItem.immatricolazione;
       this.nuovaAuto.categoria = addItem.categoria;
 
-      return this.http.post<Auto>(this.autoUrl, this.nuovaAuto, this.httpOptions).pipe(
+      return this.http.post<Auto>(`${this.autoUrl}/inserisci`, this.nuovaAuto, this.httpOptions).pipe(
         catchError(this.handleError<Auto>('addAuto'))
       );
     }
@@ -95,7 +94,7 @@ export class AutoService {
     this.nuovaAuto.immatricolazione = updateItem.immatricolazione;
     this.nuovaAuto.categoria = updateItem['categoria'];
 
-    return this.http.put(this.autoUrl, this.nuovaAuto, this.httpOptions).pipe(
+    return this.http.put(`${this.autoUrl}/modifica`, this.nuovaAuto, this.httpOptions).pipe(
       tap(_ => {
         delete this.nuovaAuto.id;
       }),
@@ -104,7 +103,7 @@ export class AutoService {
   }
 
   deleteAuto(id: number): Observable<Auto> {
-    const url = `${this.autoUrl}/${id}`;
+    const url = `${this.autoUrl}/elimina/${id}`;
     return this.http.delete<Auto>(url, this.httpOptions).pipe(
       tap(_ => console.log(`deleted auto id=${id}`)),
       catchError(this.handleError<Auto>('deleteAuto'))

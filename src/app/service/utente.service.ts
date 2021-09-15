@@ -11,7 +11,6 @@ import {TipologiaUtente, Utente} from "../model/interfaces";
 export class UtenteService {
 
   private utenteUrl = 'http://localhost:8080/api/utente';  // URL to web api
-  private ruoloUtenteUrl = 'api/tipologia_utente';
   private nuovoUtente: Utente = new class implements Utente {
     cognome!: string;
     datadinascita!: Date;
