@@ -201,7 +201,10 @@ export class TableComponent implements OnInit{
   }
 
   approve(object: any): void {
-    this.prenotazioniService.approvePrenotazione(object.id).subscribe();
+    this.prenotazioniService.approvePrenotazione(object.id).subscribe( (res:any) => {
+        this.inMemoryItems = res;
+        this.getPrenotazioni();
+    });
   }
 
 }
