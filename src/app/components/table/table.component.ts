@@ -165,6 +165,10 @@ export class TableComponent implements OnInit{
     this.prenotazioniService.getPrenotazioni()
       .subscribe(prenotazioni => {
         this.inMemoryItems = prenotazioni;
+        for (let i=0; i<prenotazioni.length; i++){
+          this.inMemoryItems[i].utente = prenotazioni[i].utente.nome + " " + prenotazioni[i].utente.cognome;
+          this.inMemoryItems[i].automezzo = prenotazioni[i].automezzo.casacostruttrice + " " + prenotazioni[i].automezzo.modello;
+        }
         this.orderFilteredList();
       });
   }
