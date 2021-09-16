@@ -43,6 +43,7 @@ export class FormComponent implements OnInit {
           this.utenteService.getUtente(numberValue)
             .subscribe(utente => {
               this.item = utente;
+              this.item.datadinascita = this.item.datadinascita.substring(0, this.item.datadinascita.indexOf("T"));
               this.utenteService.getRuolo(this.item.ruolo.id)
                 .subscribe(ruolo => {
                   this.item.ruolo = ruolo;
@@ -63,6 +64,7 @@ export class FormComponent implements OnInit {
           this.autoService.getSingleAuto(numberValue)
             .subscribe(singleAuto => {
               this.item = singleAuto;
+              this.item.immatricolazione = this.item.immatricolazione.substring(0, this.item.immatricolazione.indexOf("T"));
               this.autoService.getCategoria(this.item.categoria.id)
                 .subscribe(categoria => {
                   this.item.categoria = categoria;
