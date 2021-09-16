@@ -18,13 +18,13 @@ export class TableComponent implements OnInit{
   @Input() data!:string;
   dataRetrieved!: string
   inMemoryItems!: any[];
-  filteredList!: any[];
+  filteredList: any[] = [];
   lastSortedColumn!: string;
   orderType!: boolean;
   searchedKeyword!: string;
   active = 0;
   itemPerPage!: number;
-  pages!: number[]
+  pages: number[] = [0];
 
   faSortUp = faSortAlphaUp;
   faSortDown = faSortAlphaDown;
@@ -143,6 +143,9 @@ export class TableComponent implements OnInit{
     this.utenteService.getUtenti()
       .subscribe(utenti => {
         this.inMemoryItems = utenti;
+        for (let i=0; i<utenti.length; i++){
+          this.inMemoryItems[i].ruolo = utenti[i].ruolo.ruolo;
+        }
         this.orderFilteredList();
       });
   }
@@ -151,6 +154,9 @@ export class TableComponent implements OnInit{
     this.autoService.getAuto()
       .subscribe(auto => {
         this.inMemoryItems = auto;
+        for (let i=0; i<auto.length; i++){
+          this.inMemoryItems[i].categoria = auto[i].categoria.categoria;
+        }
         this.orderFilteredList();
       });
   }

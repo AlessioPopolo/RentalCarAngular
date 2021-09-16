@@ -45,6 +45,13 @@ export class AutoService {
       );
   }
 
+  getAutoByCategoria(categoria: String): Observable<Auto[]> {
+    return this.http.get<Auto[]>(`${this.autoUrl}/autoCategoria`)
+      .pipe(
+        catchError(this.handleError<Auto[]>('getAutoByCategoria', []))
+      );
+  }
+
   getCategorie(): Observable<TipologiaAutomezzo[]> {
     return this.http.get<TipologiaAutomezzo[]>(`${this.autoUrl}/lista-categorie`)
       .pipe(

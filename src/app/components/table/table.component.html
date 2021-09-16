@@ -5,7 +5,7 @@
 <table class="table table-bordered mt-3">
   <thead class="thead-dark">
   <tr>
-    <th class="clickable" *ngFor="let key of tableConfig.headers" (click)="orderBy(key.label)">
+    <th class="clickable" *ngFor="let key of tableConfig.headers" (click)="orderBy(key.key)">
       {{key.label}}
       <ng-container *ngIf="orderType; else elseBlock">
         <fa-icon [icon]="faSortDown" class="align-items-center"></fa-icon>
@@ -20,7 +20,9 @@
   <tbody>
   <tr *ngFor="let item of filteredList | myFilter:searchedKeyword: tableConfig.search.columns | pagination:currentPage:itemPerPage" class="clickable">
     <td *ngFor="let header of tableConfig.headers">
-      {{item[header.key]}}
+      <ng-template [ngIf]="header.key != 'password'">
+        {{item[header.key]}}
+      </ng-template>
     </td>
     <td>
       <button *ngFor="let actions of tableConfig.actions" class="{{actions.customCssClass}} mr-1" (click)="doAction(actions.action, item)">

@@ -23,7 +23,7 @@ export class FormComponent implements OnInit {
   auto: Auto[] = [];
   prenotazioni: Prenotazione[] = []
   inMemoryItems!: any;
-  item!: any;
+  item: any;
   destination!: string;
 
   constructor(private utenteService: UtenteService, private autoService: AutoService, private prenotazioniService: PrenotazioniService, public router: Router, private route: ActivatedRoute) { }
@@ -63,7 +63,7 @@ export class FormComponent implements OnInit {
           this.autoService.getSingleAuto(numberValue)
             .subscribe(singleAuto => {
               this.item = singleAuto;
-              this.autoService.getCategoria(this.item.categoria)
+              this.autoService.getCategoria(this.item.categoria.id)
                 .subscribe(categoria => {
                   this.item.categoria = categoria;
                 })
