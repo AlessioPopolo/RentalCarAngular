@@ -134,6 +134,8 @@ export class TableComponent implements OnInit{
           case "delete":
             this.deleteObj(object, "prenotazione");
             break;
+          case "approve":
+            this.approve(object);
         }
         break;
     }
@@ -145,6 +147,8 @@ export class TableComponent implements OnInit{
         this.inMemoryItems = utenti;
         for (let i=0; i<utenti.length; i++){
           this.inMemoryItems[i].ruolo = utenti[i].ruolo.ruolo;
+          let datadinascita = new Date(utenti[i].datadinascita);
+          this.inMemoryItems[i].datadinascita = datadinascita.toLocaleDateString();
         }
         this.orderFilteredList();
       });
@@ -156,6 +160,8 @@ export class TableComponent implements OnInit{
         this.inMemoryItems = auto;
         for (let i=0; i<auto.length; i++){
           this.inMemoryItems[i].categoria = auto[i].categoria.categoria;
+          let dataimmatricolazione = new Date(auto[i].immatricolazione);
+          this.inMemoryItems[i].immatricolazione = dataimmatricolazione.toLocaleDateString();
         }
         this.orderFilteredList();
       });
@@ -168,6 +174,10 @@ export class TableComponent implements OnInit{
         for (let i=0; i<prenotazioni.length; i++){
           this.inMemoryItems[i].utente = prenotazioni[i].utente.nome + " " + prenotazioni[i].utente.cognome;
           this.inMemoryItems[i].automezzo = prenotazioni[i].automezzo.casacostruttrice + " " + prenotazioni[i].automezzo.modello;
+          let startdate = new Date(prenotazioni[i].startdate);
+          let enddate = new Date(prenotazioni[i].enddate);
+          this.inMemoryItems[i].startdate = startdate.toLocaleDateString();
+          this.inMemoryItems[i].enddate = enddate.toLocaleDateString();
         }
         this.orderFilteredList();
       });
@@ -188,6 +198,10 @@ export class TableComponent implements OnInit{
         this.prenotazioniService.deletePrenotazione(object.id).subscribe();
         break;
     }
+  }
+
+  approve(object: any): void {
+    this.prenotazioniService.approvePrenotazione(object.id).subscribe();
   }
 
 }

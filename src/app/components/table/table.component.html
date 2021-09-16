@@ -25,7 +25,7 @@
       </ng-template>
     </td>
     <td>
-      <button *ngFor="let actions of tableConfig.actions" class="{{actions.customCssClass}} mr-1" (click)="doAction(actions.action, item)">
+      <button *ngFor="let actions of tableConfig.actions" class="{{actions.customCssClass}} mx-1" (click)="doAction(actions.action, item)">
         <i class="{{actions.icon}}"></i>
         {{actions.label}}
       </button>

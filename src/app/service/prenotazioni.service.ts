@@ -102,4 +102,11 @@ export class PrenotazioniService {
     );
   }
 
+  approvePrenotazione(id: number): Observable<Prenotazione>{
+    return this.http.put<Prenotazione>(`${this.prenotazioneUrl}/approva/${id}`, this.httpOptions).pipe(
+      tap(_ => console.log(`approved prenotazione id=${id}`)),
+      catchError(this.handleError<Prenotazione>('approvePrenotazione'))
+    )
+  }
+
 }
