@@ -28,8 +28,8 @@
             </ng-container>
           </ng-container>
           <ng-template #addBlock>
-            <input *ngIf="key.type != 'select'; else typeSelect" type="{{key.type}}" class="form-control" name="{{key.label}}" ngModel>
-            <ng-template #typeSelect>
+            <input *ngIf="key.type != 'select' && key.type != 'checkbox';" type="{{key.type}}" class="form-control" name="{{key.key}}" ngModel>
+            <ng-container *ngIf="key.type == 'select';">
               <select class="form-select" name="{{key.label}}" ngModel="">
                 <ng-container *ngIf="tipologia == 'utente';">
                   <option *ngFor="let item of inMemoryItems" value="{{item.id}}">{{item.ruolo}}</option>
@@ -38,7 +38,7 @@
                   <option *ngFor="let item of inMemoryItems" value="{{item.id}}">{{item.categoria}}</option>
                 </ng-container>
               </select>
-            </ng-template>
+            </ng-container>
           </ng-template>
 
         </td>

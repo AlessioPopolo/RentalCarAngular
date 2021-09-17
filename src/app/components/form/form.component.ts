@@ -130,6 +130,7 @@ export class FormComponent implements OnInit {
       case "utente":
         if (addItem.id){
           this.utenteService.updateUtente(addItem).subscribe(utente => {
+            this.getUtenti();
           })
         }
         else {
@@ -143,6 +144,7 @@ export class FormComponent implements OnInit {
       case "auto":
         if (addItem.id){
           this.autoService.updateAuto(addItem).subscribe(auto => {
+            this.getAuto();
           })
         }
         else {
@@ -156,6 +158,7 @@ export class FormComponent implements OnInit {
       case "prenotazioni":
         if (addItem.id){
           this.prenotazioniService.updatePrenotazione(addItem).subscribe(prenotazione => {
+            this.getPrenotazioni();
           })
         }
         else {
