@@ -19,6 +19,7 @@ import { FormComponent } from './components/form/form.component';
 import { FormPageComponent } from './pages/form-page/form-page.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CustomerHomepageComponent } from './pages/customer-homepage/customer-homepage.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FooterComponent } from './components/footer/footer.component';
     FormPageComponent,
     FilterPipe,
     ReservationComponent,
-    FooterComponent
+    FooterComponent,
+    CustomerHomepageComponent
   ],
   imports: [
     BrowserModule,

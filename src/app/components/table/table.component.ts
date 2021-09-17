@@ -16,6 +16,7 @@ export class TableComponent implements OnInit{
 
   @Input() tableConfig!:CustomTableConfig;
   @Input() data!:string;
+  @Input() user!:number;
   dataRetrieved!: string
   inMemoryItems!: any[];
   filteredList: any[] = [];
@@ -25,7 +26,6 @@ export class TableComponent implements OnInit{
   active = 0;
   itemPerPage!: number;
   pages: number[] = [0];
-
   faSortUp = faSortAlphaUp;
   faSortDown = faSortAlphaDown;
 
@@ -45,7 +45,10 @@ export class TableComponent implements OnInit{
 
       case "Prenotazioni":
         this.dataRetrieved = "prenotazioni";
-        this.getPrenotazioni();
+        if (!this.user){
+          this.getPrenotazioni();
+        }
+        else this.getPrenotazioniByUser();
         break;
 
       default:
@@ -169,6 +172,22 @@ export class TableComponent implements OnInit{
 
   getPrenotazioni(): void {
     this.prenotazioniService.getPrenotazioni()
+      .subscribe(prenotazioni => {
+        this.inMemoryItems = prenotazioni;
+        for (let i=0; i<prenotazioni.length; i++){
+          this.inMemoryItems[i].utente = prenotazioni[i].utente.nome + " " + prenotazioni[i].utente.cognome;
+          this.inMemoryItems[i].automezzo = prenotazioni[i].automezzo.casacostruttrice + " " + prenotazioni[i].automezzo.modello;
+          let startdate = new Date(prenotazioni[i].startdate);
+          let enddate = new Date(prenotazioni[i].enddate);
+          this.inMemoryItems[i].startdate = startdate.toLocaleDateString();
+          this.inMemoryItems[i].enddate = enddate.toLocaleDateString();
+        }
+        this.orderFilteredList();
+      });
+  }
+
+  getPrenotazioniByUser() : void {
+    this.prenotazioniService.getPrenotazioniByUser(this.user)
       .subscribe(prenotazioni => {
         this.inMemoryItems = prenotazioni;
         for (let i=0; i<prenotazioni.length; i++){

@@ -45,11 +45,11 @@ export class PrenotazioniService {
       );
   }
 
-  getPrenotazioneByUtente(id: number): Observable<Prenotazione> {
+  getPrenotazioniByUser(id: number): Observable<Prenotazione[]> {
     const url = `${this.prenotazioneUrl}/utente=${id}`;
-    return this.http.get<Prenotazione>(url)
+    return this.http.get<Prenotazione[]>(url)
       .pipe(
-        catchError(this.handleError<Prenotazione>(`getPrenotazioneByUtente id=${id}`))
+        catchError(this.handleError<Prenotazione[]>(`getPrenotazioneByUtente id=${id}`))
       );
   }
 

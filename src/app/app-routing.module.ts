@@ -4,6 +4,7 @@ import {AdminHomepageComponent} from "./pages/admin-homepage/admin-homepage.comp
 import {AutoComponent} from "./pages/auto/auto.component";
 import {FormPageComponent} from "./pages/form-page/form-page.component";
 import {ReservationComponent} from "./pages/reservation/reservation.component";
+import {CustomerHomepageComponent} from "./pages/customer-homepage/customer-homepage.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/admin', pathMatch: 'full'},
@@ -22,6 +23,12 @@ const routes: Routes = [
   { path: 'prenotazioni', children: [
       {path: 'all', component: ReservationComponent},
       {path: 'edit/:id/prenotazioni', component: FormPageComponent}
+    ]
+  },
+  { path: 'customer', children: [
+      {path: '', component: CustomerHomepageComponent},
+      {path: 'add/prenotazione', component: FormPageComponent},
+      {path: 'edit/:id/prenotazione', component: FormPageComponent},
     ]
   }
 ];
