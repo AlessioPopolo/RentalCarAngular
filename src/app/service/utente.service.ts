@@ -86,7 +86,7 @@ export class UtenteService {
     else if (addItem.ruolo==="2"){
       this.nuovoUtente.ruolo = {'ruolo':'superuser','id':'2'};
     }
-    this.nuovoUtente.datadinascita = addItem['data di nascita'];
+    this.nuovoUtente.datadinascita = addItem['datadinascita'];
     this.nuovoUtente.password = addItem.password;
     return this.http.post<Utente>(`${this.utenteUrl}/inserisci`, this.nuovoUtente, this.httpOptions).pipe(
       catchError(this.handleError<Utente>('addUtente'))
@@ -104,7 +104,7 @@ export class UtenteService {
     else if (updateItem.ruolo==="2"){
       this.nuovoUtente.ruolo = {'ruolo':'superuser','id':'2'};
     }
-    this.nuovoUtente.datadinascita = updateItem['data di nascita'];
+    this.nuovoUtente.datadinascita = updateItem['datadinascita'];
     this.nuovoUtente.password = updateItem.password;
     return this.http.put(`${this.utenteUrl}/modifica`, this.nuovoUtente, this.httpOptions).pipe(
       tap(_ => {
