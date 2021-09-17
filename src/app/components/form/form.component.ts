@@ -85,6 +85,8 @@ export class FormComponent implements OnInit {
           this.prenotazioniService.getPrenotazione(numberValue)
             .subscribe(prenotazione => {
               this.item = prenotazione;
+              this.item.startdate = this.item.startdate.substring(0, this.item.startdate.indexOf("T"));
+              this.item.enddate = this.item.enddate.substring(0, this.item.enddate.indexOf("T"));
             });
         }
 

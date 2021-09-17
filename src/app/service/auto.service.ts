@@ -82,12 +82,11 @@ export class AutoService {
   }
 
     addAuto(addItem: any) {
-      this.nuovaAuto.casacostruttrice = addItem['casa costruttrice'];
+      this.nuovaAuto.casacostruttrice = addItem['casacostruttrice'];
       this.nuovaAuto.modello = addItem.modello;
       this.nuovaAuto.targa = addItem.targa;
       this.nuovaAuto.immatricolazione = addItem.immatricolazione;
       this.nuovaAuto.categoria = addItem.categoria;
-      //TODO categoria attualmente restituisce un numero, e non va bene, è necessario l'oggetto
       return this.http.post<Auto>(`${this.autoUrl}/inserisci`, this.nuovaAuto, this.httpOptions).pipe(
         catchError(this.handleError<Auto>('addAuto'))
       );
@@ -95,12 +94,11 @@ export class AutoService {
 
   updateAuto(updateItem: any): Observable<any> {
     this.nuovaAuto.id = updateItem.id;
-    this.nuovaAuto.casacostruttrice = updateItem['casa costruttrice'];
+    this.nuovaAuto.casacostruttrice = updateItem['casacostruttrice'];
     this.nuovaAuto.modello = updateItem.modello;
     this.nuovaAuto.targa = updateItem.targa;
     this.nuovaAuto.immatricolazione = updateItem.immatricolazione;
     this.nuovaAuto.categoria = updateItem['categoria'];
-    //TODO categoria attualmente restituisce un numero, e non va bene, è necessario l'oggetto
     return this.http.put(`${this.autoUrl}/modifica`, this.nuovaAuto, this.httpOptions).pipe(
       tap(_ => {
         delete this.nuovaAuto.id;
