@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import * as _ from "lodash";
 import { faSortAlphaDown, faSortAlphaUp } from '@fortawesome/free-solid-svg-icons';
 import {UtenteService} from "../../service/utente.service";
@@ -6,6 +6,7 @@ import {CustomTableConfig} from "../../resources/CustomTableConfig";
 import {AutoService} from "../../service/auto.service";
 import {Router} from "@angular/router";
 import {PrenotazioniService} from "../../service/prenotazioni.service";
+
 
 @Component({
   selector: 'app-table',
@@ -15,8 +16,7 @@ import {PrenotazioniService} from "../../service/prenotazioni.service";
 export class TableComponent implements OnInit{
 
   @Input() tableConfig!:CustomTableConfig;
-  @Input() data!:string;
-  @Input() user!:number;
+  @Input() data!:any;
   dataRetrieved!: string
   inMemoryItems!: any[];
   filteredList: any[] = [];
@@ -32,29 +32,13 @@ export class TableComponent implements OnInit{
   constructor(private utenteService: UtenteService, private autoService: AutoService, private prenotazioniService: PrenotazioniService, public router: Router) { }
 
   ngOnInit(): void {
-    switch (this.data){
-      case "Utenti":
-        this.dataRetrieved = "utenti";
-        this.getUtenti();
-        break;
+    this.inMemoryItems = this.data;
+    this.orderFilteredList();
+  }
 
-      case "Auto":
-        this.dataRetrieved = "auto";
-        this.getAuto();
-        break;
-
-      case "Prenotazioni":
-        this.dataRetrieved = "prenotazioni";
-        if (!this.user){
-          this.getPrenotazioni();
-        }
-        else this.getPrenotazioniByUser();
-        break;
-
-      default:
-        console.log("No one is matched");
-    }
-
+  ngOnChanges() {
+    this.inMemoryItems = this.data;
+    this.orderFilteredList();
   }
 
   orderFilteredList() {
@@ -144,64 +128,6 @@ export class TableComponent implements OnInit{
     }
   }
 
-  getUtenti(): void {
-    this.utenteService.getUtenti()
-      .subscribe(utenti => {
-        this.inMemoryItems = utenti;
-        for (let i=0; i<utenti.length; i++){
-          this.inMemoryItems[i].ruolo = utenti[i].ruolo.ruolo;
-          let datadinascita = new Date(utenti[i].datadinascita);
-          this.inMemoryItems[i].datadinascita = datadinascita.toLocaleDateString();
-        }
-        this.orderFilteredList();
-      });
-  }
-
-  getAuto(): void {
-    this.autoService.getAuto()
-      .subscribe(auto => {
-        this.inMemoryItems = auto;
-        for (let i=0; i<auto.length; i++){
-          this.inMemoryItems[i].categoria = auto[i].categoria.categoria;
-          let dataimmatricolazione = new Date(auto[i].immatricolazione);
-          this.inMemoryItems[i].immatricolazione = dataimmatricolazione.toLocaleDateString();
-        }
-        this.orderFilteredList();
-      });
-  }
-
-  getPrenotazioni(): void {
-    this.prenotazioniService.getPrenotazioni()
-      .subscribe(prenotazioni => {
-        this.inMemoryItems = prenotazioni;
-        for (let i=0; i<prenotazioni.length; i++){
-          this.inMemoryItems[i].utente = prenotazioni[i].utente.nome + " " + prenotazioni[i].utente.cognome;
-          this.inMemoryItems[i].automezzo = prenotazioni[i].automezzo.casacostruttrice + " " + prenotazioni[i].automezzo.modello;
-          let startdate = new Date(prenotazioni[i].startdate);
-          let enddate = new Date(prenotazioni[i].enddate);
-          this.inMemoryItems[i].startdate = startdate.toLocaleDateString();
-          this.inMemoryItems[i].enddate = enddate.toLocaleDateString();
-        }
-        this.orderFilteredList();
-      });
-  }
-
-  getPrenotazioniByUser() : void {
-    this.prenotazioniService.getPrenotazioniByUser(this.user)
-      .subscribe(prenotazioni => {
-        this.inMemoryItems = prenotazioni;
-        for (let i=0; i<prenotazioni.length; i++){
-          this.inMemoryItems[i].utente = prenotazioni[i].utente.nome + " " + prenotazioni[i].utente.cognome;
-          this.inMemoryItems[i].automezzo = prenotazioni[i].automezzo.casacostruttrice + " " + prenotazioni[i].automezzo.modello;
-          let startdate = new Date(prenotazioni[i].startdate);
-          let enddate = new Date(prenotazioni[i].enddate);
-          this.inMemoryItems[i].startdate = startdate.toLocaleDateString();
-          this.inMemoryItems[i].enddate = enddate.toLocaleDateString();
-        }
-        this.orderFilteredList();
-      });
-  }
-
   deleteObj(object: any, item: string): void {
     switch (item){
       case "utente":
@@ -222,7 +148,7 @@ export class TableComponent implements OnInit{
   approve(object: any): void {
     this.prenotazioniService.approvePrenotazione(object.id).subscribe( (res:any) => {
         this.inMemoryItems = res;
-        this.getPrenotazioni();
+        /*this.getPrenotazioni();*/
     });
   }
 
