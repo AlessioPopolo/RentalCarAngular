@@ -28,7 +28,7 @@ export const userPagination: MyPagination = {
 export const theActionEnum: MyTableActionEnum[] = [
   {customCssClass: "btn btn-primary", icon: "bi bi-pencil-square", label: "EDIT", action: "edit"},
   {customCssClass: "btn btn-danger", icon: "bi bi-x-lg", label: "DELETE", action: "delete"},
-  {customCssClass: "btn btn-success", icon: "bi bi-check-square", label: "APPROVA", action: "approve"}
+  {customCssClass: "btn btn-success", icon: "bi bi-check-square", label: "APPROVA", action: "approve", functionShow: (row: any)=> row.approved || new Date(row.startdate.split('/').reverse().join('/')) < new Date()}
 ]
 
 export const reservationsTableConfig : CustomTableConfig={

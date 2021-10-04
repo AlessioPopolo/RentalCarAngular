@@ -31,4 +31,5 @@ export interface MyTableActionEnum {
   icon: string;
   label: string;
   action: string;
+  functionShow?: Function;
 }
