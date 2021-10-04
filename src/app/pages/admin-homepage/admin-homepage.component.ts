@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {usersTableConfig} from "../../resources/UsersTableConfig";
 import {addButton} from "../../resources/AddButtonConfig";
 import {UtenteService} from "../../service/utente.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-homepage',
@@ -15,8 +16,10 @@ export class AdminHomepageComponent implements OnInit {
   addButtonConfig = addButton
   destination: string = "add/utente";
   inMemoryItems!: any[];
+  event!: string;
+  object!: string;
 
-  constructor(private utenteService: UtenteService) { }
+  constructor(private utenteService: UtenteService, public router: Router) { }
 
   ngOnInit(): void {
     this.getUtenti();
@@ -32,5 +35,26 @@ export class AdminHomepageComponent implements OnInit {
           this.inMemoryItems[i].datadinascita = datadinascita.toLocaleDateString();
         }
       });
+  }
+
+  takeEvent($event: string) {
+    this.event = $event;
+  }
+  doAction($event: any) {
+    let object = $event;
+    switch (this.event){
+      case "edit":
+        this.router.navigate(["admin/edit/" + object.id + "/utente"]);
+        break;
+
+      case "delete":
+        this.deleteObj(object);
+        break;
+    }
+  }
+
+  deleteObj(object: any): void {
+    this.inMemoryItems = this.inMemoryItems.filter(h => h !== object);
+    this.utenteService.deleteUtente(object.id).subscribe();
   }
 }

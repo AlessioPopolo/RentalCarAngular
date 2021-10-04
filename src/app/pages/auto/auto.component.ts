@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {autoTableConfig} from "../../resources/AutoTableConfig";
 import {addButton} from "../../resources/AddButtonConfig";
 import {AutoService} from "../../service/auto.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auto',
@@ -15,8 +16,10 @@ export class AutoComponent implements OnInit {
   addButtonConfig = addButton
   destination: string = "add/auto";
   inMemoryItems!: any[];
+  event!: string;
+  object!: string;
 
-  constructor(private autoService: AutoService) { }
+  constructor(private autoService: AutoService, public router: Router) { }
 
   ngOnInit(): void {
     this.getAuto();
@@ -32,5 +35,26 @@ export class AutoComponent implements OnInit {
           this.inMemoryItems[i].immatricolazione = dataimmatricolazione.toLocaleDateString();
         }
       });
+  }
+
+  takeEvent($event: string) {
+    this.event = $event;
+  }
+  doAction($event: any) {
+    let object = $event;
+    switch (this.event){
+      case "edit":
+        this.router.navigate(["auto/edit/" + object.id + "/auto"]);
+        break;
+
+      case "delete":
+        this.deleteObj(object);
+        break;
+    }
+  }
+
+  deleteObj(object: any): void {
+    this.inMemoryItems = this.inMemoryItems.filter(h => h !== object);
+    this.autoService.deleteAuto(object.id).subscribe();
   }
 }

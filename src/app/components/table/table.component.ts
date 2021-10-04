@@ -1,11 +1,8 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import * as _ from "lodash";
 import { faSortAlphaDown, faSortAlphaUp } from '@fortawesome/free-solid-svg-icons';
-import {UtenteService} from "../../service/utente.service";
 import {CustomTableConfig} from "../../resources/CustomTableConfig";
-import {AutoService} from "../../service/auto.service";
 import {Router} from "@angular/router";
-import {PrenotazioniService} from "../../service/prenotazioni.service";
 
 
 @Component({
@@ -17,7 +14,8 @@ export class TableComponent implements OnInit{
 
   @Input() tableConfig!:CustomTableConfig;
   @Input() data!:any;
-  dataRetrieved!: string
+  @Output() itemEvent = new EventEmitter<string>();
+  @Output() itemObject = new EventEmitter<object>();
   inMemoryItems!: any[];
   filteredList: any[] = [];
   lastSortedColumn!: string;
@@ -29,7 +27,7 @@ export class TableComponent implements OnInit{
   faSortUp = faSortAlphaUp;
   faSortDown = faSortAlphaDown;
 
-  constructor(private utenteService: UtenteService, private autoService: AutoService, private prenotazioniService: PrenotazioniService, public router: Router) { }
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
     this.inMemoryItems = this.data;
@@ -87,69 +85,9 @@ export class TableComponent implements OnInit{
   }
 
   doAction(action: string, object: any){
-    switch (this.dataRetrieved){
-      case "utenti":
-        switch (action){
-          case "edit":
-            this.router.navigate(["admin/edit/" + object.id + "/utente"]);
-            break;
-
-          case "delete":
-            this.deleteObj(object, "utente");
-            break;
-        }
-        break;
-
-      case "auto":
-        switch (action){
-          case "edit":
-            this.router.navigate(["auto/edit/" + object.id + "/auto"]);
-            break;
-
-          case "delete":
-            this.deleteObj(object, "auto");
-            break;
-        }
-        break;
-
-      case "prenotazioni":
-        switch (action){
-          case "edit":
-            this.router.navigate(["prenotazioni/edit/" + object.id + "/prenotazioni"]);
-            break;
-
-          case "delete":
-            this.deleteObj(object, "prenotazione");
-            break;
-          case "approve":
-            this.approve(object);
-        }
-        break;
-    }
+    this.itemEvent.emit(action);
+    this.itemObject.emit(object);
   }
 
-  deleteObj(object: any, item: string): void {
-    switch (item){
-      case "utente":
-        this.filteredList = this.filteredList.filter(h => h !== object);
-        this.utenteService.deleteUtente(object.id).subscribe();
-        break;
-      case "auto":
-        this.filteredList = this.filteredList.filter(h => h !== object);
-        this.autoService.deleteAuto(object.id).subscribe();
-        break;
-      case "prenotazione":
-        this.filteredList = this.filteredList.filter(h => h !== object);
-        this.prenotazioniService.deletePrenotazione(object.id).subscribe();
-        break;
-    }
-  }
-
-  approve(object: any): void {
-    this.prenotazioniService.approvePrenotazione(object.id).subscribe( (res:any) => {
-        this.inMemoryItems = res;
-        /*this.getPrenotazioni();*/
-    });
-  }
 
 }

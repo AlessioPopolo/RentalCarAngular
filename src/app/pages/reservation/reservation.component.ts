@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {reservationsTableConfig} from "../../resources/ReservationsTableConfig";
 import {PrenotazioniService} from "../../service/prenotazioni.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-reservation',
@@ -12,8 +13,10 @@ export class ReservationComponent implements OnInit {
   title = 'Prenotazioni';
   tableConfig = reservationsTableConfig;
   inMemoryItems!: any[];
+  event!: string;
+  object!: string;
 
-  constructor(private prenotazioniService: PrenotazioniService) { }
+  constructor(private prenotazioniService: PrenotazioniService, public router: Router) { }
 
   ngOnInit(): void {
     this.getPrenotazioni()
@@ -32,5 +35,35 @@ export class ReservationComponent implements OnInit {
           this.inMemoryItems[i].enddate = enddate.toLocaleDateString();
         }
       });
+  }
+
+  takeEvent($event: string) {
+    this.event = $event;
+  }
+  doAction($event: any) {
+    let object = $event;
+    switch (this.event){
+      case "edit":
+        this.router.navigate(["prenotazioni/edit/" + object.id + "/prenotazioni"]);
+        break;
+
+      case "delete":
+        this.deleteObj(object);
+        break;
+
+      case "approve":
+        this.approve(object);
+    }
+  }
+
+  deleteObj(object: any): void {
+    this.inMemoryItems = this.inMemoryItems.filter(h => h !== object);
+    this.prenotazioniService.deletePrenotazione(object.id).subscribe();
+  }
+
+  approve(object: any): void {
+    this.prenotazioniService.approvePrenotazione(object.id).subscribe(
+      () => this.getPrenotazioni()
+    );
   }
 }
